@@ -2,7 +2,7 @@
   "hash": "35285d27b59dadd17365c49f04edc136",
   "result": {
     "engine": "jupyter",
-    "markdown": "---\ntitle: \"Post With Code\"\nauthor: \"Harlow Malloc\"\ndate: \"2024-06-25\"\ncategories: [news, code, analysis]\nimage: \"image.jpg\"\nformat:\n  html:\n    code-fold: true\njupyter: python3\n---\n\n\n\n\n\nThis is a post with executable code.\n\n::: {#cell-fig-plot .cell execution_count=1}\n``` {.python .cell-code}\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 2*np.pi)\ny = np.sin(x)\n\nfig, ax = plt.subplots()\nax.plot(x, y)\nax.grid(True)\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![sine plot](index_files/figure-html/fig-plot-output-1.png){#fig-plot width=590 height=411}\n:::\n:::\n\n\n@fig-plot is a plot\n\n",
+    "markdown": "---\ntitle: \"Post With Code\"\nauthor: \"Harlow Malloc\"\ndate: \"2024-06-25\"\ncategories: [news, code, analysis]\nimage: \"image.jpg\"\nformat:\n  html:\n    code-fold: true\njupyter: python3\n---\n\n\n\n\nThis is a post with executable code.\n\n::: {#cell-fig-plot .cell execution_count=1}\n``` {.python .cell-code}\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 2*np.pi)\ny = np.sin(x)\n\nfig, ax = plt.subplots()\nax.plot(x, y)\nax.grid(True)\nplt.show()\n```\n\n::: {.cell-output .cell-output-display}\n![sine plot](index_files/figure-html/fig-plot-output-1.png){#fig-plot width=590 height=411}\n:::\n:::\n\n\n@fig-plot is a plot\n\n",
     "supporting": [
       "index_files"
     ],

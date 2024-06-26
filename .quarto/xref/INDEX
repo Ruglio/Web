@@ -1,17 +1,17 @@
 {
-  "about.qmd": {
-    "about.html": "86f33e44"
-  },
   "index.qmd": {
-    "index.html": "763377da"
+    "index.html": "ec6db07d"
   },
   "posts/gaussian_processes/gp.qmd": {
-    "gp.html": "344c0f6b"
+    "gp.html": "91eeb172"
+  },
+  "about.qmd": {
+    "about.html": "5f6894f6"
   },
   "posts/post-with-code/index.qmd": {
-    "index.html": "5288a5c9"
+    "index.html": "a39ddac1"
   },
   "posts/welcome/index.qmd": {
-    "index.html": "b06a2939"
+    "index.html": "69bf6a5b"
   }
 }
