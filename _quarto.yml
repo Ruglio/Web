@@ -1,0 +1,24 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "RuglioBoi_blog"
+  site-url: https://www.RuglioBoi.io
+  description: "A great sample blog"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/
+      - icon: twitter
+        href: https://twitter.com
+format:
+  html:
+    theme:
+      light: simplex
+      dark: darkly
+    css: styles.css
+
+
+

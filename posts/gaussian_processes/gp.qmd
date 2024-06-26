@@ -1,0 +1,326 @@
+---
+title: "Introduction to Gaussian Processes"
+author: "Andrea Ruglioni"
+date: "25 June 2024"
+last-modified: "25 June 2024"
+format: 
+  html:
+    code-fold: true
+jupyter: python3
+filters:
+  - shinylive
+---
+
+## Abstract
+
+This article introduces Gaussian Processes (GPs), discussing their mathematical foundations and practical applications in regression tasks. Python code examples demonstrate their implementation with squared exponential and Matérn kernels, including handling noisy measurements.
+
+## Introduction
+
+Gaussian Processes (GPs) are a powerful, non-parametric tool for modeling and understanding data. They provide a probabilistic approach to learning in kernel-defined function spaces, making them particularly useful for regression and optimization tasks.
+
+## Gaussian Processes
+
+### What is a Gaussian Process?
+
+Gaussian Processes (GPs) are a non-parametric method for regression and classification tasks. They define a distribution over functions and can provide uncertainty measures for predictions.
+
+### Mathematical Formulation
+
+A Gaussian Process is completely specified by its mean function $m(x)$ and covariance function $k(x, x')$:
+
+$$
+f(x) \sim GP(m(x), k(x, x'))
+$$
+
+where:
+
+- $m(x) = \mathbb{E}[f(x)]$
+- $k(x, x') = \mathbb{E}[(f(x) - m(x))(f(x') - m(x'))]$
+
+The mean function is often assumed to be zero for simplicity $m(x) = 0$.
+
+The covariance function (kernel) defines the shape and smoothness of the functions sampled from the GP. Common choices for kernels include the squared exponential (RBF) kernel and the Matérn kernel.
+
+### Squared Exponential Kernel
+
+The squared exponential kernel (also known as the RBF kernel) is defined as:
+
+$$
+k_{\text{Exp}}(x, x') = \sigma^2 \exp \left( -\frac{(x - x')^2}{2l^2} \right)
+$$
+
+where $\sigma^2$ is the variance and $l$ is the length scale.
+
+```{shinylive-python}
+#| standalone: true
+#| viewerHeight: 475
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import multivariate_normal
+from shiny import App, render, ui
+
+
+# Define the kernel function
+def exponential_quadratic_kernel(x1, x2, l=1.0, sigma2=1.0):
+    """Computes the exponential quadratic kernel (squared exponential kernel)."""
+    sqdist = np.sum(x1**2, 1).reshape(-1, 1) + np.sum(x2**2, 1) - 2 * np.dot(x1, x2.T)
+    return sigma2 * np.exp(-0.5 / l**2 * sqdist)
+
+# Define the input space
+X = np.linspace(-4, 4, 100).reshape(-1, 1)
+
+def plot_kernel_and_samples(l, sigma2):
+    # Compute the kernel matrix
+    K = exponential_quadratic_kernel(X, X, l=l, sigma2=sigma2)
+
+    # Create the plot
+    fig, ax = plt.subplots(2, 1, figsize=(18, 6), sharex=True)
+
+    # Plot the kernel
+    ax[0].plot(X, exponential_quadratic_kernel(X, np.zeros((1,1)), l=l, sigma2=sigma2))
+    ax[0].set_title(f"Squared exponential kernel function")
+
+    # Sample 5 functions from the Gaussian process defined by the kernel
+    mean = np.zeros(100)
+    cov = K
+    samples = multivariate_normal.rvs(mean, cov, 5)
+
+    # Plot the samples
+    for i in range(5):
+        ax[1].plot(X, samples[i])
+    ax[1].set_title("Samples from the GP")
+    ax[1].set_xlabel("x")
+
+    plt.tight_layout()
+    return fig
+
+app_ui = ui.page_fluid(
+    ui.layout_sidebar(
+        ui.panel_sidebar(
+            ui.input_slider("length_scale", "Length Scale (l):", min=0.1, max=5.0, value=1.0, step=0.1),
+            ui.input_slider("variance", "Variance (σ²):", min=0.1, max=5.0, value=1.0, step=0.1)
+        ),
+        ui.panel_main(
+            ui.output_plot("kernelPlot")
+        )
+    )
+)
+
+def server(input, output, session):
+    @output
+    @render.plot
+    def kernelPlot():
+        l = input.length_scale()
+        sigma2 = input.variance()
+        fig = plot_kernel_and_samples(l, sigma2)
+        return fig
+
+app = App(app_ui, server)
+```
+
+### Matérn kernel
+
+The Matérn kernel is defined as:
+
+$$
+k_{\text{Matérn}}(x, x') = \sigma^2 \frac{2^{1-\nu}}{\Gamma(\nu)} \left( \sqrt{2\nu} \frac{|x - x'|}{l} \right)^{\nu} K_{\nu} \left( \sqrt{2\nu} \frac{|x - x'|}{l} \right)
+$$
+
+where $\nu$ controls the smoothness of the function, $l$ is the length scale, $\sigma^2$ is the variance, and $K_{\nu}$ is the modified Bessel function.
+
+```{shinylive-python}
+#| standalone: true
+#| viewerHeight: 475
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import multivariate_normal
+from shiny import App, render, ui
+from scipy.special import kv, gamma
+from scipy.spatial.distance import cdist
+
+
+# Define the kernel function
+def matern_kernel(x1, x2, l=1.0, sigma2=1.0, nu=1.5):
+    """Computes the Matérn kernel."""
+    D = cdist(x1, x2, 'euclidean')
+    const = (2**(1-nu))/gamma(nu)
+    K = sigma2 * const * (np.sqrt(2*nu)*D/l)**nu * kv(nu, np.sqrt(2*nu)*D/l)
+    # Replace NaN values with 1 for x == x'
+    K[np.isnan(K)] = 1
+    return K
+
+# Define the input space
+X = np.linspace(-4, 4, 100).reshape(-1, 1)
+
+def plot_kernel_and_samples(l, sigma2, nu):
+    # Compute the kernel matrix
+    K = matern_kernel(X, X, l=l, sigma2=sigma2, nu=nu)
+
+    # Create the plot
+    fig, ax = plt.subplots(2, 1, figsize=(18, 6), sharex=True)
+
+    # Plot the kernel
+    ax[0].plot(X, matern_kernel(X, np.zeros((1,1)), l=l, sigma2=sigma2, nu=nu))
+    ax[0].set_title(f"Matern kernel function")
+
+    # Sample 5 functions from the Gaussian process defined by the kernel
+    mean = np.zeros(100)
+    cov = K
+    samples = multivariate_normal.rvs(mean, cov, 5)
+
+    # Plot the samples
+    for i in range(5):
+        ax[1].plot(X, samples[i])
+    ax[1].set_title("Samples from the GP")
+    ax[1].set_xlabel("x")
+
+    plt.tight_layout()
+    return fig
+
+app_ui = ui.page_fluid(
+    ui.layout_sidebar(
+        ui.panel_sidebar(
+            ui.input_slider("length_scale", "Length Scale (l):", min=0.1, max=5.0, value=1.0, step=0.1),
+            ui.input_slider("variance", "Variance (σ²):", min=0.1, max=5.0, value=1.0, step=0.1),
+            ui.input_slider("smoothness_param", "Smoothness param (v):", min=1.5, max=5.0, value=1.5, step=0.5)
+        ),
+        ui.panel_main(
+            ui.output_plot("kernelPlot")
+        )
+    )
+)
+
+def server(input, output, session):
+    @output
+    @render.plot
+    def kernelPlot():
+        l = input.length_scale()
+        sigma2 = input.variance()
+        nu = input.smoothness_param()
+        fig = plot_kernel_and_samples(l, sigma2, nu)
+        return fig
+
+app = App(app_ui, server)
+```
+
+### Noisy measurements
+
+Handling noisy observations in GPs involves adding a noise term to the covariance matrix. The noisy observations are modeled as:
+
+$$
+y = f(x) + \epsilon
+$$
+
+
+where $\epsilon \sim \mathcal{N}(0, \sigma_n^2)$.
+
+
+```{shinylive-python}
+#| standalone: true
+#| viewerHeight: 475
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import multivariate_normal
+from shiny import App, render, ui
+from scipy.spatial.distance import cdist
+from scipy.special import kv, gamma
+
+# Define the kernel functions
+def exponential_quadratic_kernel(x1, x2, l=1.0, sigma2=1.0):
+    """Computes the exponential quadratic kernel (squared exponential kernel)."""
+    sqdist = np.sum(x1**2, 1).reshape(-1, 1) + np.sum(x2**2, 1) - 2 * np.dot(x1, x2.T)
+    return sigma2 * np.exp(-0.5 / l**2 * sqdist)
+
+def matern_kernel(x1, x2, l=1.0, sigma2=1.0, nu=1.5):
+    """Computes the Matérn kernel."""
+    D = cdist(x1, x2, 'euclidean')
+    const = (2**(1-nu))/gamma(nu)
+    K = sigma2 * const * (np.sqrt(2*nu)*D/l)**nu * kv(nu, np.sqrt(2*nu)*D/l)
+    # Replace NaN values with 1 for x == x'
+    K[np.isnan(K)] = 1
+    return K
+
+# Define the input space
+X = np.linspace(-4, 4, 100).reshape(-1, 1)
+
+def plot_kernels_and_samples(noise_level):
+    # Generate training data with noise
+    X_train = np.array([-3, -2, -1, 1, 3.5]).reshape(-1, 1)
+    y_train = np.sin(X_train) + noise_level * np.random.randn(X_train.shape[0], 1).reshape(-1,1)
+
+    # Compute the kernel matrices for training data
+    K_train_exp = exponential_quadratic_kernel(X_train, X_train) + noise_level**2 * np.eye(len(X_train))
+    K_s_exp = exponential_quadratic_kernel(X_train, X)
+    K_ss_exp = exponential_quadratic_kernel(X, X)
+    
+    K_train_matern = matern_kernel(X_train, X_train) + noise_level**2 * np.eye(len(X_train))
+    K_s_matern = matern_kernel(X_train, X)
+    K_ss_matern = matern_kernel(X, X)
+
+    # Compute the mean and covariance of the posterior distribution for exponential kernel
+    K_train_inv_exp = np.linalg.inv(K_train_exp)
+    mu_s_exp = (K_s_exp.T.dot(K_train_inv_exp).dot(y_train)).reshape(-1)
+    cov_s_exp = K_ss_exp - K_s_exp.T.dot(K_train_inv_exp).dot(K_s_exp)
+
+    # Compute the mean and covariance of the posterior distribution for Matérn kernel
+    K_train_inv_matern = np.linalg.inv(K_train_matern)
+    mu_s_matern = (K_s_matern.T.dot(K_train_inv_matern).dot(y_train)).reshape(-1)
+    cov_s_matern = K_ss_matern - K_s_matern.T.dot(K_train_inv_matern).dot(K_s_matern)
+
+    # Sample 5 functions from the posterior distribution for both kernels
+    samples_exp = multivariate_normal.rvs(mu_s_exp, cov_s_exp, 5)
+    samples_matern = multivariate_normal.rvs(mu_s_matern, cov_s_matern, 5)
+
+    # Create the plot
+    fig, ax = plt.subplots(2, 1, figsize=(18, 6))
+
+    # Plot the training data and GP predictions for exponential kernel
+    ax[0].scatter(X_train, y_train, color='black', zorder=10, label='Noisy observations')
+    ax[0].plot(X, mu_s_exp, color='blue', label='Mean')
+    ax[0].plot(X, np.sin(X), color='black', label='True function')
+    ax[0].fill_between(X.ravel(), mu_s_exp - 1.96 * np.sqrt(np.diag(cov_s_exp)), mu_s_exp + 1.96 * np.sqrt(np.diag(cov_s_exp)), color="blue", alpha=0.2, label='95% confidence interval')
+    # for i in range(5):
+    #     ax[0].plot(X, samples_exp[i], alpha=0.5, linestyle='--')
+    ax[0].set_title(f"Squared exponential kernel")
+    # ax[0].legend()
+
+    # Plot the training data and GP predictions for Matérn kernel
+    ax[1].scatter(X_train, y_train, color='black', zorder=10, label='Noisy observations')
+    ax[1].plot(X, mu_s_matern, color="blue", label='Mean')
+    ax[1].plot(X, np.sin(X), color="black", label='True function')
+    ax[1].fill_between(X.ravel(), mu_s_matern - 1.96 * np.sqrt(np.diag(cov_s_matern)), mu_s_matern + 1.96 * np.sqrt(np.diag(cov_s_matern)), color="black", alpha=0.2, label='95% confidence interval')
+    # for i in range(5):
+    #     ax[1].plot(X, samples_matern[i], alpha=0.5, linestyle='--')
+    ax[1].set_title(f"Matérn kernel")
+    # ax[1].legend()
+
+    plt.tight_layout()
+    return fig
+
+app_ui = ui.page_fluid(
+    ui.layout_sidebar(
+        ui.panel_sidebar(
+            ui.input_slider("noise_level", "Noise Level (σ²ₙ):", min=0.01, max=1.0, value=0.1, step=0.01)
+        ),
+        ui.panel_main(
+            ui.output_plot("kernelPlot")
+        )
+    )
+)
+
+def server(input, output, session):
+    @output
+    @render.plot
+    def kernelPlot():
+        noise_level = input.noise_level()
+        fig = plot_kernels_and_samples(noise_level)
+        return fig
+
+app = App(app_ui, server)
+```
+
+According to the data, the GP model effectively captures the underlying function and provides uncertainty estimates.
