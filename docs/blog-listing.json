@@ -1,0 +1,8 @@
+{
+  "listing": "/blog.html",
+  "items": [
+    "/posts/gaussian_processes/gp.html",
+    "/posts/post-with-code/index.html",
+    "/posts/welcome/index.html"
+  ]
+}

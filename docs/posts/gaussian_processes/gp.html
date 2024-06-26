@@ -9,7 +9,7 @@
 <meta name="author" content="Andrea Ruglioni">
 <meta name="dcterms.date" content="2024-06-25">
 
-<title>Introduction to Gaussian Processes – RuglioBoi_blog</title>
+<title>Introduction to Gaussian Processes – RuglioBoi</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">RuglioBoi_blog</span>
+    <span class="navbar-title">RuglioBoi</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -312,9 +312,10 @@ def matern_kernel(x1, x2, l=1.0, sigma2=1.0, nu=1.5):
     """Computes the Matérn kernel."""
     D = cdist(x1, x2, 'euclidean')
     const = (2**(1-nu))/gamma(nu)
-    K = sigma2 * const * (np.sqrt(2*nu)*D/l)**nu * kv(nu, np.sqrt(2*nu)*D/l)
+    K = const * (np.sqrt(2*nu)*D/l)**nu * kv(nu, np.sqrt(2*nu)*D/l)
     # Replace NaN values with 1 for x == x'
     K[np.isnan(K)] = 1
+    K *= sigma2
     return K
 
 # Define the input space
@@ -328,7 +329,7 @@ def plot_kernel_and_samples(l, sigma2, nu):
     fig, ax = plt.subplots(2, 1, figsize=(18, 6), sharex=True)
 
     # Plot the kernel
-    ax[0].plot(X, matern_kernel(X, np.zeros((1,1)), l=l, sigma2=sigma2, nu=nu))
+    ax[0].plot(X, matern_kernel(X, np.zeros(()), l=l, sigma2=sigma2, nu=nu))
     ax[0].set_title(f"Matern kernel function")
 
     # Sample 5 functions from the Gaussian process defined by the kernel
@@ -723,7 +724,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/www\.RuglioBoi\.io");
+      var filterRegex = new RegExp("https:\/\/ruglio\.github\.io\/RuglioBoi\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1050,6 +1051,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://utteranc.es/client.js" repo="Ruglio/Web" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 
