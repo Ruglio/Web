@@ -8,6 +8,7 @@
 
 <meta name="author" content="Andrea Ruglioni">
 <meta name="dcterms.date" content="2024-06-25">
+<meta name="description" content="An introduction to Gaussian Processes, discussing their mathematical foundations and practical applications in regression tasks.">
 
 <title>Introduction to Gaussian Processes – RuglioBoi</title>
 <style>
@@ -109,7 +110,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -153,7 +154,15 @@ window.Quarto = {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Introduction to Gaussian Processes</h1>
-                      </div>
+                  <div>
+        <div class="description">
+          An introduction to Gaussian Processes, discussing their mathematical foundations and practical applications in regression tasks.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">machine-learning</div>
+              </div>
+                  </div>
   </div>
     
   
@@ -180,7 +189,30 @@ window.Quarto = {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#gaussian-processes" id="toc-gaussian-processes" class="nav-link" data-scroll-target="#gaussian-processes">Gaussian Processes</a>
+  <ul class="collapse">
+  <li><a href="#making-predictions" id="toc-making-predictions" class="nav-link" data-scroll-target="#making-predictions">Making Predictions</a></li>
+  </ul></li>
+  <li><a href="#interactive-visualizations" id="toc-interactive-visualizations" class="nav-link" data-scroll-target="#interactive-visualizations">Interactive Visualizations</a>
+  <ul class="collapse">
+  <li><a href="#squared-exponential-kernel" id="toc-squared-exponential-kernel" class="nav-link" data-scroll-target="#squared-exponential-kernel">Squared Exponential Kernel</a></li>
+  <li><a href="#matérn-kernel" id="toc-matérn-kernel" class="nav-link" data-scroll-target="#matérn-kernel">Matérn kernel</a></li>
+  <li><a href="#noisy-observations" id="toc-noisy-observations" class="nav-link" data-scroll-target="#noisy-observations">Noisy Observations</a></li>
+  </ul></li>
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications">Applications</a>
+  <ul class="collapse">
+  <li><a href="#bayesian-hyperparameter-tuning" id="toc-bayesian-hyperparameter-tuning" class="nav-link" data-scroll-target="#bayesian-hyperparameter-tuning">Bayesian hyperparameter tuning</a></li>
+  <li><a href="#time-series-forecasting" id="toc-time-series-forecasting" class="nav-link" data-scroll-target="#time-series-forecasting">Time series forecasting</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -188,41 +220,73 @@ window.Quarto = {
 
 
 
-<section id="abstract" class="level2">
-<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
-<p>This article introduces Gaussian Processes (GPs), discussing their mathematical foundations and practical applications in regression tasks. Python code examples demonstrate their implementation with squared exponential and Matérn kernels, including handling noisy measurements.</p>
-</section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Gaussian Processes (GPs) are a powerful, non-parametric tool for modeling and understanding data. They provide a probabilistic approach to learning in kernel-defined function spaces, making them particularly useful for regression and optimization tasks.</p>
+<p>Welcome to the first installment of our series on deep kernel learning. In this post, we’ll delve into Gaussian processes (GPs) and their application as regressors. We’ll start by exploring what Gaussian processes are and why they are powerful tools for regression tasks. In subsequent posts, we’ll build on this foundation to discuss multi-task Gaussian processes and how they can be combined with neural networks to create deep kernel models.</p>
 </section>
 <section id="gaussian-processes" class="level2">
 <h2 class="anchored" data-anchor-id="gaussian-processes">Gaussian Processes</h2>
-<section id="what-is-a-gaussian-process" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-a-gaussian-process">What is a Gaussian Process?</h3>
-<p>Gaussian Processes (GPs) are a non-parametric method for regression and classification tasks. They define a distribution over functions and can provide uncertainty measures for predictions.</p>
-</section>
-<section id="mathematical-formulation" class="level3">
-<h3 class="anchored" data-anchor-id="mathematical-formulation">Mathematical Formulation</h3>
-<p>A Gaussian Process is completely specified by its mean function <span class="math inline">\(m(x)\)</span> and covariance function <span class="math inline">\(k(x, x')\)</span>:</p>
+<p>To understand Gaussian Processes fully, it’s important to briefly mention the Kolmogorov Extension Theorem. This theorem guarantees the existence of a stochastic process, i.e., a collection of random variables <span class="math inline">\(\{Y_x\}_{x \in \mathcal{X}}\)</span>, that satisfies specified finite-dimensional distributions. In simpler terms, it ensures that we can define a Gaussian process by specifying its mean and covariance functions for any finite set of points. Therefore, similar to a multivariate Gaussian distribution, a Gaussian process is defined by its mean function <span class="math inline">\(m(\cdot) : \mathcal{X} \to \mathbb{R}\)</span> and covariance function <span class="math inline">\(k(\cdot, \cdot) : \mathcal{X} \times \mathcal{X} \to \mathbb{R}\)</span>.</p>
 <p><span class="math display">\[
-f(x) \sim GP(m(x), k(x, x'))
+f \sim GP(m, k).
 \]</span></p>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(m(x) = \mathbb{E}[f(x)]\)</span></li>
-<li><span class="math inline">\(k(x, x') = \mathbb{E}[(f(x) - m(x))(f(x') - m(x'))]\)</span></li>
-</ul>
-<p>The mean function is often assumed to be zero for simplicity <span class="math inline">\(m(x) = 0\)</span>.</p>
-<p>The covariance function (kernel) defines the shape and smoothness of the functions sampled from the GP. Common choices for kernels include the squared exponential (RBF) kernel and the Matérn kernel.</p>
+<p>For a set of input points <span class="math inline">\(X = \{x_1, x_2, \ldots, x_n\}\)</span>, with observations <span class="math inline">\(y = \{y_1 = f(x_1), y_2 = f(x_2), \ldots, y_n = f(x_n)\}\)</span>, the joint distribution of the observed outputs <span class="math inline">\(y\)</span> and the function values at <span class="math inline">\(X\)</span> is given by:</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+y_1 \\
+\vdots \\
+y_n
+\end{pmatrix} \sim \mathcal{N}\left(
+\mathbf{m} =
+\begin{pmatrix}
+m(x_1) \\
+\vdots \\
+m(x_n)
+\end{pmatrix},
+\mathbf{K} =
+\begin{pmatrix}
+k(x_1, x_1) &amp; \dots &amp; k(x_1, x_n) \\
+\vdots &amp; \ddots &amp; \vdots \\
+k(x_n, x_1) &amp; \dots &amp; k(x_n, x_n)
+\end{pmatrix}\right)
+\]</span></p>
+<p>The mean function (often assumed to be zero) and <span class="math inline">\(k\)</span> is the covariance function or kernel. The choice of kernel function is crucial as it defines the properties of the functions that can be represented. It defines the shape and smoothness of the functions sampled from the GP. Common choices include the squared exponential kernel and the Matérn kernel.</p>
+<p>Observe that, in a similar matter, we could define a t-student process, etc.</p>
+<section id="making-predictions" class="level3">
+<h3 class="anchored" data-anchor-id="making-predictions">Making Predictions</h3>
+<p>To make predictions at new input points <span class="math inline">\(x_*\)</span>, we use the joint distribution of the observed outputs <span class="math inline">\(y\)</span> and the function values at <span class="math inline">\(x_*\)</span>, which is given by:</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+y \\
+f(x_*)
+\end{pmatrix} \sim \mathcal{N}\left(
+\begin{pmatrix}
+\mathbf{m} \\
+\mu(x_*)
+\end{pmatrix},
+\begin{pmatrix}
+\mathbf{K} &amp; k(x, x_*) \\
+k(x_*, x) &amp; k(x_*, x_*)
+\end{pmatrix}\right)
+\]</span></p>
+<p>where <span class="math inline">\(k(x_*, x)\)</span> is the covariance between the observed data and the new inputs.</p>
+<p>The conditional distribution of <span class="math inline">\(f(x_*)\)</span> given <span class="math inline">\(y\)</span> is then Gaussian with mean and covariance: <span class="math display">\[
+\mu(x_*) = k(x_*, x) \mathbf{K}^{-1} (y - \mathbf{m})
+\]</span> <span class="math display">\[
+\sigma^2(x_*) = k(x_*, x_*) - k(x_*, x) \mathbf{K}^{-1} k(x, x_*)
+\]</span></p>
 </section>
+</section>
+<section id="interactive-visualizations" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-visualizations">Interactive Visualizations</h2>
+<p>Let’s explore some interactive plots to better understand how different parameters of the kernel functions influence the Gaussian process model.</p>
 <section id="squared-exponential-kernel" class="level3">
 <h3 class="anchored" data-anchor-id="squared-exponential-kernel">Squared Exponential Kernel</h3>
 <p>The squared exponential kernel (also known as the RBF kernel) is defined as:</p>
 <p><span class="math display">\[
 k_{\text{Exp}}(x, x') = \sigma^2 \exp \left( -\frac{(x - x')^2}{2l^2} \right)
 \]</span></p>
-<p>where <span class="math inline">\(\sigma^2\)</span> is the variance and <span class="math inline">\(l\)</span> is the length scale.</p>
+<p>where <span class="math inline">\(\sigma^2\)</span> is the variance and <span class="math inline">\(l\)</span> is the length scale. Below is an interactive plot that shows how the squared exponential kernel depends on the lengthscale and variance. Notice that with a small length scale, the function is more wiggly, while with a large length scale, it is smoother, as the kernel function decays more slowly with distance. Instead, the variance controls the amplitude of the function, with higher values leading to more variability.</p>
 <pre class="shinylive-python" data-engine="python"><code>#| standalone: true
 #| viewerHeight: 475
 
@@ -295,7 +359,7 @@ app = App(app_ui, server)</code></pre>
 <p><span class="math display">\[
 k_{\text{Matérn}}(x, x') = \sigma^2 \frac{2^{1-\nu}}{\Gamma(\nu)} \left( \sqrt{2\nu} \frac{|x - x'|}{l} \right)^{\nu} K_{\nu} \left( \sqrt{2\nu} \frac{|x - x'|}{l} \right)
 \]</span></p>
-<p>where <span class="math inline">\(\nu\)</span> controls the smoothness of the function, <span class="math inline">\(l\)</span> is the length scale, <span class="math inline">\(\sigma^2\)</span> is the variance, and <span class="math inline">\(K_{\nu}\)</span> is the modified Bessel function.</p>
+<p>where <span class="math inline">\(\nu\)</span> controls the smoothness of the function, <span class="math inline">\(l\)</span> is the length scale, <span class="math inline">\(\sigma^2\)</span> is the variance, and <span class="math inline">\(K_{\nu}\)</span> is the modified Bessel function. Below is an interactive plot that shows how the Matérn kernel depends on the lengthscale, variance, and <span class="math inline">\(\nu\)</span>. The former two parameters have the same effect as in the squared exponential kernel, while <span class="math inline">\(\nu\)</span> controls the smoothness of the function. Indeed, we have that the samples generated have smoothness <span class="math inline">\(\lceil \nu \rceil - 1\)</span>, and for <span class="math inline">\(\nu \to \infty\)</span>, the Matérn kernel converges to the squared exponential kernel.</p>
 <pre class="shinylive-python" data-engine="python"><code>#| standalone: true
 #| viewerHeight: 475
 
@@ -329,7 +393,7 @@ def plot_kernel_and_samples(l, sigma2, nu):
     fig, ax = plt.subplots(2, 1, figsize=(18, 6), sharex=True)
 
     # Plot the kernel
-    ax[0].plot(X, matern_kernel(X, np.zeros(()), l=l, sigma2=sigma2, nu=nu))
+    ax[0].plot(X, matern_kernel(X, np.zeros((1, 1)), l=l, sigma2=sigma2, nu=nu))
     ax[0].set_title(f"Matern kernel function")
 
     # Sample 5 functions from the Gaussian process defined by the kernel
@@ -371,13 +435,14 @@ def server(input, output, session):
 
 app = App(app_ui, server)</code></pre>
 </section>
-<section id="noisy-measurements" class="level3">
-<h3 class="anchored" data-anchor-id="noisy-measurements">Noisy measurements</h3>
-<p>Handling noisy observations in GPs involves adding a noise term to the covariance matrix. The noisy observations are modeled as:</p>
+<section id="noisy-observations" class="level3">
+<h3 class="anchored" data-anchor-id="noisy-observations">Noisy Observations</h3>
+<p>Noise and measurement error are inevitable in real-world data, which can significantly impact the performance and reliability of predictive models. We can represent noisy observations as:</p>
 <p><span class="math display">\[
 y = f(x) + \epsilon
 \]</span></p>
-<p>where <span class="math inline">\(\epsilon \sim \mathcal{N}(0, \sigma_n^2)\)</span>.</p>
+<p>where <span class="math inline">\(\epsilon\)</span> is a random variable representing the noise. Usually, we assume that <span class="math inline">\(\epsilon \sim \mathcal{N}(0, \sigma_n^2)\)</span>, where <span class="math inline">\(\sigma_n^2\)</span> is the variance of the noise.</p>
+<p>Below is an interactive plot that demonstrates how noise influences the Gaussian process model. The plot shows the noisy training data (black points), from a noisy version of the true function <span class="math inline">\(f(x) = \sin(x)\)</span>, the black line. The plot also shows the GP mean prediction (blue line) for the squared exponential and Matérn kernels, along with the 95% confidence intervals. For <span class="math inline">\(\sigma_n^2 = 0\)</span>, the model perfectly interpolates the training data, while for higher noise levels, the model becomes less certain about the underlying function and provides wider confidence intervals.</p>
 <pre class="shinylive-python" data-engine="python"><code>#| standalone: true
 #| viewerHeight: 475
 
@@ -464,7 +529,7 @@ def plot_kernels_and_samples(noise_level):
 app_ui = ui.page_fluid(
     ui.layout_sidebar(
         ui.panel_sidebar(
-            ui.input_slider("noise_level", "Noise Level (σ²ₙ):", min=0.01, max=1.0, value=0.1, step=0.01)
+            ui.input_slider("noise_level", "Noise Level (σ²ₙ):", min=0.0, max=1.0, value=0.0, step=0.01)
         ),
         ui.panel_main(
             ui.output_plot("kernelPlot")
@@ -481,7 +546,22 @@ def server(input, output, session):
         return fig
 
 app = App(app_ui, server)</code></pre>
-<p>According to the data, the GP model effectively captures the underlying function and provides uncertainty estimates.</p>
+</section>
+</section>
+<section id="applications" class="level2">
+<h2 class="anchored" data-anchor-id="applications">Applications</h2>
+<section id="bayesian-hyperparameter-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="bayesian-hyperparameter-tuning">Bayesian hyperparameter tuning</h3>
+<p>Hyperparameter tuning is a critical yet challenging aspect of training neural networks. Finding the optimal combination of hyperparameters, such as learning rate, batch size, number of layers, and units per layer, can significantly enhance a model’s performance. Traditional methods like grid search and random search often prove to be inefficient and computationally expensive. This is where Bayesian optimization, powered by Gaussian processes, comes into play, offering a smarter approach to hyperparameter tuning.</p>
+<p>Unlike exhaustive search methods, Bayesian optimization is more sample-efficient, meaning it can find optimal hyperparameters with fewer iterations. It works by</p>
+<ol type="1">
+<li>modeling the objective function (e.g., validation loss) as a Gaussian process in the hyperparameter space</li>
+<li>using an acquisition function to decide where to sample next. The acquisition function balances exploration (sampling in unexplored regions) and exploitation (sampling in regions with low loss) to guide the search towards the global optimum.</li>
+</ol>
+</section>
+<section id="time-series-forecasting" class="level3">
+<h3 class="anchored" data-anchor-id="time-series-forecasting">Time series forecasting</h3>
+<p>Gaussian processes are also widely used in time series forecasting due to their flexibility and ability to model complex patterns in the data. By treating time series data as a function of time, Gaussian processes can capture the underlying dynamics and dependencies in the series. They can provide not only point estimates but also probabilistic forecasts, including prediction intervals that quantify uncertainty.</p>
 
 
 </section>

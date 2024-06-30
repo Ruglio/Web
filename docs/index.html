@@ -80,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories','listing-image',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
@@ -194,7 +194,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(2)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="machine-learning">machine-learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -214,7 +214,12 @@ window.Quarto = {
     </div>
 </div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1719266400000" data-listing-file-modified-sort="1719416486749" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1748">
+<div class="quarto-post image-right" data-index="0" data-categories="machine-learning" data-listing-date-sort="1719266400000" data-listing-file-modified-sort="1719780302313" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2417">
+<div class="thumbnail">
+<p><a href="./posts/gaussian_processes/gp.html" class="no-external"></a></p><a href="./posts/gaussian_processes/gp.html" class="no-external">
+<p><img loading="lazy" src="./posts/gaussian_processes/gp.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/gaussian_processes/gp.html" class="no-external"></a></p>
+</div>
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/gaussian_processes/gp.html" class="no-external">Introduction to Gaussian Processes</a>
@@ -222,8 +227,13 @@ window.Quarto = {
 <div class="listing-subtitle">
 <a href="./posts/gaussian_processes/gp.html" class="no-external"></a>
 </div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('machine-learning'); return false;">
+machine-learning
+</div>
+</div>
 <div class="listing-description">
-<a href="./posts/gaussian_processes/gp.html" class="no-external">This article introduces Gaussian Processes (GPs), discussing their mathematical foundations and practical applications in regression tasks. Python code examples demonstrate…</a>
+<a href="./posts/gaussian_processes/gp.html" class="no-external">An introduction to Gaussian Processes, discussing their mathematical foundations and practical applications in regression tasks.</a>
 </div>
 </div>
 <div class="metadata">
@@ -232,12 +242,17 @@ window.Quarto = {
 Jun 25, 2024
 </div>
 <div class="listing-reading-time">
-9 min
+13 min
 </div>
 </a>
 </div>
 </div>
 <div class="quarto-post image-right" data-index="1" data-categories="news,code,analysis" data-listing-date-sort="1719266400000" data-listing-file-modified-sort="1719346828997" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="30">
+<div class="thumbnail">
+<p><a href="./posts/post-with-code/index.html" class="no-external"></a></p><a href="./posts/post-with-code/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/post-with-code/image.jpg" class="thumbnail-image"></p>
+</a><p><a href="./posts/post-with-code/index.html" class="no-external"></a></p>
+</div>
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/post-with-code/index.html" class="no-external">Post With Code</a>
@@ -272,6 +287,11 @@ Jun 25, 2024
 </div>
 </div>
 <div class="quarto-post image-right" data-index="2" data-categories="news" data-listing-date-sort="1719007200000" data-listing-file-modified-sort="1719337518457" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="32">
+<div class="thumbnail">
+<p><a href="./posts/welcome/index.html" class="no-external"></a></p><a href="./posts/welcome/index.html" class="no-external">
+<p class="card-img-top"><img src="posts\welcome\thumbnail.jpg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/welcome/index.html" class="no-external"></a></p>
+</div>
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/welcome/index.html" class="no-external">Welcome To My Blog</a>
