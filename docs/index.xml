@@ -23,32 +23,34 @@
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Welcome to the first installment of our series on deep kernel learning. In this post, we’ll delve into Gaussian processes (GPs) and their application as regressors. We’ll start by exploring what Gaussian processes are and why they are powerful tools for regression tasks. In subsequent posts, we’ll build on this foundation to discuss multi-task Gaussian processes and how they can be combined with neural networks to create deep kernel models.</p>
+<p>Welcome to the first installment of our series on deep kernel learning. In this post, we’ll delve into Gaussian processes (GPs) and their application as regressors. We’ll start by exploring what GPs are and why they are powerful tools for regression tasks. In subsequent posts, we’ll build on this foundation to discuss multi-task Gaussian processes and how they can be combined with neural networks to create deep kernel models.</p>
 </section>
 <section id="gaussian-processes" class="level2">
 <h2 class="anchored" data-anchor-id="gaussian-processes">Gaussian Processes</h2>
-<p>To understand Gaussian Processes fully, it’s important to briefly mention the Kolmogorov Extension Theorem. This theorem guarantees the existence of a stochastic process, i.e., a collection of random variables <img src="https://latex.codecogs.com/png.latex?%5C%7BY_x%5C%7D_%7Bx%20%5Cin%20%5Cmathcal%7BX%7D%7D">, that satisfies specified finite-dimensional distributions. In simpler terms, it ensures that we can define a Gaussian process by specifying its mean and covariance functions for any finite set of points. Therefore, similar to a multivariate Gaussian distribution, a Gaussian process is defined by its mean function <img src="https://latex.codecogs.com/png.latex?m(%5Ccdot)%20:%20%5Cmathcal%7BX%7D%20%5Cto%20%5Cmathbb%7BR%7D"> and covariance function <img src="https://latex.codecogs.com/png.latex?k(%5Ccdot,%20%5Ccdot)%20:%20%5Cmathcal%7BX%7D%20%5Ctimes%20%5Cmathcal%7BX%7D%20%5Cto%20%5Cmathbb%7BR%7D">.</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0Af%20%5Csim%20GP(m,%20k).%0A"></p>
-<p>For a set of input points <img src="https://latex.codecogs.com/png.latex?X%20=%20%5C%7Bx_1,%20x_2,%20%5Cldots,%20x_n%5C%7D">, with observations <img src="https://latex.codecogs.com/png.latex?y%20=%20%5C%7By_1%20=%20f(x_1),%20y_2%20=%20f(x_2),%20%5Cldots,%20y_n%20=%20f(x_n)%5C%7D">, the joint distribution of the observed outputs <img src="https://latex.codecogs.com/png.latex?y"> and the function values at <img src="https://latex.codecogs.com/png.latex?X"> is given by:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bpmatrix%7D%0Ay_1%20%5C%5C%0A%5Cvdots%20%5C%5C%0Ay_n%0A%5Cend%7Bpmatrix%7D%20%5Csim%20%5Cmathcal%7BN%7D%5Cleft(%0A%5Cmathbf%7Bm%7D%20=%0A%5Cbegin%7Bpmatrix%7D%0Am(x_1)%20%5C%5C%0A%5Cvdots%20%5C%5C%0Am(x_n)%0A%5Cend%7Bpmatrix%7D,%0A%5Cmathbf%7BK%7D%20=%0A%5Cbegin%7Bpmatrix%7D%0Ak(x_1,%20x_1)%20&amp;%20%5Cdots%20&amp;%20k(x_1,%20x_n)%20%5C%5C%0A%5Cvdots%20&amp;%20%5Cddots%20&amp;%20%5Cvdots%20%5C%5C%0Ak(x_n,%20x_1)%20&amp;%20%5Cdots%20&amp;%20k(x_n,%20x_n)%0A%5Cend%7Bpmatrix%7D%5Cright)%0A"></p>
-<p>The mean function (often assumed to be zero) and <img src="https://latex.codecogs.com/png.latex?k"> is the covariance function or kernel. The choice of kernel function is crucial as it defines the properties of the functions that can be represented. It defines the shape and smoothness of the functions sampled from the GP. Common choices include the squared exponential kernel and the Matérn kernel.</p>
-<p>Observe that, in a similar matter, we could define a t-student process, etc.</p>
+<p>To understand Gaussian processes fully, it’s important to briefly mention the Kolmogorov extension theorem. This theorem guarantees the existence of a stochastic process, i.e., a collection of random variables <img src="https://latex.codecogs.com/png.latex?%5C%7BY_x%5C%7D_%7Bx%20%5Cin%20%5Cmathcal%7BX%7D%7D,%20Y_x%20%5Cin%20%5Cmathbb%7BR%7D">, that satisfies a specified finite-dimensional distribution. For instance, it ensures that we can define a Gaussian process by specyfing that any finite set of random variables has a multivariate Gaussian distribution, without worrying about the infinite-dimensional nature of the process. Observe that, in a similar matter, we could define a t-student process, by imposing that finite-dimensional distributions are t-student.</p>
+<p>Therefore, similar to a multivariate Gaussian distribution, a Gaussian process <img src="https://latex.codecogs.com/png.latex?f"> is defined by its mean function <img src="https://latex.codecogs.com/png.latex?m(%5Ccdot)%20:%20%5Cmathcal%7BX%7D%20%5Cto%20%5Cmathbb%7BR%7D"> and covariance function <img src="https://latex.codecogs.com/png.latex?k(%5Ccdot,%20%5Ccdot)%20:%20%5Cmathcal%7BX%7D%20%5Ctimes%20%5Cmathcal%7BX%7D%20%5Cto%20%5Cmathbb%7BR%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af%20%5Csim%20GP(m,%20k),%0A"></p>
+<p>and it can be interpreted as an infinite-dimensional generalization of a multivariate Gaussian distribution.</p>
+<p>In a regression setting, we could use <img src="https://latex.codecogs.com/png.latex?f"> as a surrogate model of a function <img src="https://latex.codecogs.com/png.latex?g:%20%5Cmathcal%7BX%7D%20%5Cto%20%5Cmathbb%7BR%7D">, where <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BX%7D"> is the input space. Suppose you have a set of input points <img src="https://latex.codecogs.com/png.latex?X%20=%20%5C%7Bx_1,%20x_2,%20%5Cldots,%20x_n%5C%7D">, with observations <img src="https://latex.codecogs.com/png.latex?y%20=%20%5C%7By_1%20=%20g(x_1),%20y_2%20=%20g(x_2),%20%5Cldots,%20y_n%20=%20g(x_n)%5C%7D">, the joint distribution of the observed outputs <img src="https://latex.codecogs.com/png.latex?y">, assuming a GP prior, is given by:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bpmatrix%7D%0Ay_1%20%5C%5C%0A%5Cvdots%20%5C%5C%0Ay_n%0A%5Cend%7Bpmatrix%7D%20%5Csim%20%5Cmathcal%7BN%7D%5Cleft(%0A%5Cmathbf%7Bm%7D%20=%0A%5Cbegin%7Bpmatrix%7D%0Am(x_1)%20%5C%5C%0A%5Cvdots%20%5C%5C%0Am(x_n)%0A%5Cend%7Bpmatrix%7D,%0A%5Cmathbf%7BK%7D%20=%0A%5Cbegin%7Bpmatrix%7D%0Ak(x_1,%20x_1)%20&amp;%20%5Cdots%20&amp;%20k(x_1,%20x_n)%20%5C%5C%0A%5Cvdots%20&amp;%20%5Cddots%20&amp;%20%5Cvdots%20%5C%5C%0Ak(x_n,%20x_1)%20&amp;%20%5Cdots%20&amp;%20k(x_n,%20x_n)%0A%5Cend%7Bpmatrix%7D%5Cright),%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bm%7D"> is the vector of mean function values and <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BK%7D"> is the covariance matrix of the function values at the input points. This approach allows us to make predictions at new input points <img src="https://latex.codecogs.com/png.latex?x_*"> by conditioning on the observed data, providing not only point estimates but also uncertainty estimates.</p>
 <section id="making-predictions" class="level3">
 <h3 class="anchored" data-anchor-id="making-predictions">Making Predictions</h3>
-<p>To make predictions at new input points <img src="https://latex.codecogs.com/png.latex?x_*">, we use the joint distribution of the observed outputs <img src="https://latex.codecogs.com/png.latex?y"> and the function values at <img src="https://latex.codecogs.com/png.latex?x_*">, which is given by:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bpmatrix%7D%0Ay%20%5C%5C%0Af(x_*)%0A%5Cend%7Bpmatrix%7D%20%5Csim%20%5Cmathcal%7BN%7D%5Cleft(%0A%5Cbegin%7Bpmatrix%7D%0A%5Cmathbf%7Bm%7D%20%5C%5C%0A%5Cmu(x_*)%0A%5Cend%7Bpmatrix%7D,%0A%5Cbegin%7Bpmatrix%7D%0A%5Cmathbf%7BK%7D%20&amp;%20k(x,%20x_*)%20%5C%5C%0Ak(x_*,%20x)%20&amp;%20k(x_*,%20x_*)%0A%5Cend%7Bpmatrix%7D%5Cright)%0A"></p>
-<p>where <img src="https://latex.codecogs.com/png.latex?k(x_*,%20x)"> is the covariance between the observed data and the new inputs.</p>
-<p>The conditional distribution of <img src="https://latex.codecogs.com/png.latex?f(x_*)"> given <img src="https://latex.codecogs.com/png.latex?y"> is then Gaussian with mean and covariance: <img src="https://latex.codecogs.com/png.latex?%0A%5Cmu(x_*)%20=%20k(x_*,%20x)%20%5Cmathbf%7BK%7D%5E%7B-1%7D%20(y%20-%20%5Cmathbf%7Bm%7D)%0A"> <img src="https://latex.codecogs.com/png.latex?%0A%5Csigma%5E2(x_*)%20=%20k(x_*,%20x_*)%20-%20k(x_*,%20x)%20%5Cmathbf%7BK%7D%5E%7B-1%7D%20k(x,%20x_*)%0A"></p>
+<p>To make a prediction <img src="https://latex.codecogs.com/png.latex?y_*%20=%20g(x_*)"> at new input point, we use the joint distribution of the observed outputs <img src="https://latex.codecogs.com/png.latex?y"> and the function values at <img src="https://latex.codecogs.com/png.latex?x_*">, which is given by:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bpmatrix%7D%0Ay%20%5C%5C%0Ay_*%0A%5Cend%7Bpmatrix%7D%20%5Csim%20%5Cmathcal%7BN%7D%5Cleft(%0A%5Cbegin%7Bpmatrix%7D%0A%5Cmathbf%7Bm%7D%20%5C%5C%0Am(x_*)%0A%5Cend%7Bpmatrix%7D,%0A%5Cbegin%7Bpmatrix%7D%0A%5Cmathbf%7BK%7D%20&amp;%20k(X,%20x_*)%20%5C%5C%0Ak(x_*,%20X)%20&amp;%20k(x_*,%20x_*)%0A%5Cend%7Bpmatrix%7D%5Cright)%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?k(x_*,%20X)"> is vector of covariances between the new input point <img src="https://latex.codecogs.com/png.latex?x_*"> and the observed data points <img src="https://latex.codecogs.com/png.latex?X">. The conditional distribution of <img src="https://latex.codecogs.com/png.latex?y_*"> given <img src="https://latex.codecogs.com/png.latex?y"> is then Gaussian with mean and covariance:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmu(x_*)%20=%20k(x_*,%20X)%20%5Cmathbf%7BK%7D%5E%7B-1%7D%20(y%20-%20%5Cmathbf%7Bm%7D),%0A"> <img src="https://latex.codecogs.com/png.latex?%0As%5E2(x_*)%20=%20k(x_*,%20x_*)%20-%20k(x_*,%20X)%20%5Cmathbf%7BK%7D%5E%7B-1%7D%20k(X,%20x_*).%0A"></p>
+<p>Therefore, given the observed data, we can estimate the function value at a new input point <img src="https://latex.codecogs.com/png.latex?x_*"> as <img src="https://latex.codecogs.com/png.latex?%5Cmu(x_*)"> and quantify the uncertainty in the prediction as <img src="https://latex.codecogs.com/png.latex?s%5E2(x_*)">. This is a key advantage of GPs, which can be important in decision-making processes.</p>
 </section>
 </section>
 <section id="interactive-visualizations" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-visualizations">Interactive Visualizations</h2>
-<p>Let’s explore some interactive plots to better understand how different parameters of the kernel functions influence the Gaussian process model.</p>
+<p>Let’s explore some interactive plots to better understand how the kernel functions influence the Gaussian process model. Indeed, the choice of the kernel function is crucial in defining the prior over functions, as it determines the smoothness and periodicity of the functions that the GP can model. Therefore, they play a fundamental role in the model’s flexibility and generalization capabilities, and they can be tailored to the specific characteristics of the data at hand. On the other hand, the mean function is usually set constant, as the kernel is flexible enough.</p>
 <section id="squared-exponential-kernel" class="level3">
 <h3 class="anchored" data-anchor-id="squared-exponential-kernel">Squared Exponential Kernel</h3>
 <p>The squared exponential kernel (also known as the RBF kernel) is defined as:</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0Ak_%7B%5Ctext%7BExp%7D%7D(x,%20x')%20=%20%5Csigma%5E2%20%5Cexp%20%5Cleft(%20-%5Cfrac%7B(x%20-%20x')%5E2%7D%7B2l%5E2%7D%20%5Cright)%0A"></p>
-<p>where <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2"> is the variance and <img src="https://latex.codecogs.com/png.latex?l"> is the length scale. Below is an interactive plot that shows how the squared exponential kernel depends on the lengthscale and variance. Notice that with a small length scale, the function is more wiggly, while with a large length scale, it is smoother, as the kernel function decays more slowly with distance. Instead, the variance controls the amplitude of the function, with higher values leading to more variability.</p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2"> is the variance and <img src="https://latex.codecogs.com/png.latex?l"> is the length scale. Below is an interactive plot that shows how the squared exponential kernel depends on the lengthscale and variance. Notice that with a small length scale, the function is more wiggly. Instead, with a large length scale it is smoother, as the kernel function decays more slowly with distance (i.e., the correlation between faraway points is higher, and they are more similar to each other). Instead, the variance controls the amplitude of the function, with higher values leading to more variability.</p>
 <pre class="shinylive-python" data-engine="python"><code>#| standalone: true
 #| viewerHeight: 475
 
@@ -119,7 +121,7 @@ app = App(app_ui, server)</code></pre>
 <h3 class="anchored" data-anchor-id="matérn-kernel">Matérn kernel</h3>
 <p>The Matérn kernel is defined as:</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0Ak_%7B%5Ctext%7BMat%C3%A9rn%7D%7D(x,%20x')%20=%20%5Csigma%5E2%20%5Cfrac%7B2%5E%7B1-%5Cnu%7D%7D%7B%5CGamma(%5Cnu)%7D%20%5Cleft(%20%5Csqrt%7B2%5Cnu%7D%20%5Cfrac%7B%7Cx%20-%20x'%7C%7D%7Bl%7D%20%5Cright)%5E%7B%5Cnu%7D%20K_%7B%5Cnu%7D%20%5Cleft(%20%5Csqrt%7B2%5Cnu%7D%20%5Cfrac%7B%7Cx%20-%20x'%7C%7D%7Bl%7D%20%5Cright)%0A"></p>
-<p>where <img src="https://latex.codecogs.com/png.latex?%5Cnu"> controls the smoothness of the function, <img src="https://latex.codecogs.com/png.latex?l"> is the length scale, <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2"> is the variance, and <img src="https://latex.codecogs.com/png.latex?K_%7B%5Cnu%7D"> is the modified Bessel function. Below is an interactive plot that shows how the Matérn kernel depends on the lengthscale, variance, and <img src="https://latex.codecogs.com/png.latex?%5Cnu">. The former two parameters have the same effect as in the squared exponential kernel, while <img src="https://latex.codecogs.com/png.latex?%5Cnu"> controls the smoothness of the function. Indeed, we have that the samples generated have smoothness <img src="https://latex.codecogs.com/png.latex?%5Clceil%20%5Cnu%20%5Crceil%20-%201">, and for <img src="https://latex.codecogs.com/png.latex?%5Cnu%20%5Cto%20%5Cinfty">, the Matérn kernel converges to the squared exponential kernel.</p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5Cnu"> controls the smoothness of the function, <img src="https://latex.codecogs.com/png.latex?l"> is the length scale, <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2"> is the variance, and <img src="https://latex.codecogs.com/png.latex?K_%7B%5Cnu%7D"> is the modified Bessel function. The former two parameters have the same effect as in the squared exponential kernel, while <img src="https://latex.codecogs.com/png.latex?%5Cnu"> controls the smoothness of the function. Indeed, we have that the samples generated have smoothness <img src="https://latex.codecogs.com/png.latex?%5Clceil%20%5Cnu%20%5Crceil%20-%201">, and for <img src="https://latex.codecogs.com/png.latex?%5Cnu%20%5Cto%20%5Cinfty">, the Matérn kernel converges to the squared exponential kernel, leading to infinitely smooth functions.</p>
 <pre class="shinylive-python" data-engine="python"><code>#| standalone: true
 #| viewerHeight: 475
 
@@ -195,12 +197,15 @@ def server(input, output, session):
 
 app = App(app_ui, server)</code></pre>
 </section>
-<section id="noisy-observations" class="level3">
-<h3 class="anchored" data-anchor-id="noisy-observations">Noisy Observations</h3>
-<p>Noise and measurement error are inevitable in real-world data, which can significantly impact the performance and reliability of predictive models. We can represent noisy observations as:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%0Ay%20=%20f(x)%20+%20%5Cepsilon%0A"></p>
-<p>where <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> is a random variable representing the noise. Usually, we assume that <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%20%5Csim%20%5Cmathcal%7BN%7D(0,%20%5Csigma_n%5E2)">, where <img src="https://latex.codecogs.com/png.latex?%5Csigma_n%5E2"> is the variance of the noise.</p>
-<p>Below is an interactive plot that demonstrates how noise influences the Gaussian process model. The plot shows the noisy training data (black points), from a noisy version of the true function <img src="https://latex.codecogs.com/png.latex?f(x)%20=%20%5Csin(x)">, the black line. The plot also shows the GP mean prediction (blue line) for the squared exponential and Matérn kernels, along with the 95% confidence intervals. For <img src="https://latex.codecogs.com/png.latex?%5Csigma_n%5E2%20=%200">, the model perfectly interpolates the training data, while for higher noise levels, the model becomes less certain about the underlying function and provides wider confidence intervals.</p>
+</section>
+<section id="noisy-observations" class="level2">
+<h2 class="anchored" data-anchor-id="noisy-observations">Noisy Observations</h2>
+<p>Noise and measurement error are inevitable in real-world data, which can significantly impact the performance and reliability of predictive models. As a result, it is essential to take noise into account when modeling data with GP. We can represent noisy observations as:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ay%20=%20g(x)%20+%20%5Cepsilon%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> is a random variable representing the noise. Usually, we assume that <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%20%5Csim%20%5Cmathcal%7BN%7D(0,%20%5Csigma_n%5E2)">, where <img src="https://latex.codecogs.com/png.latex?%5Csigma_n%5E2"> is the variance of the noise. In this way, it can be easily incorporated into the GP by adding a diagonal noise term to the kernel matrix:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7BK%7D_n%20=%20%5Cmathbf%7BK%7D%20+%20%5Csigma_n%5E2%20%5Cmathbf%7BI%7D,%0A"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BK%7D"> is the kernel matrix computed on the training data and <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BI%7D"> is the identity matrix.</p>
+<p>Below is an interactive plot that demonstrates how noise influences the GP model. The plot shows the noisy training data (black points), from a noisy version of the true function <img src="https://latex.codecogs.com/png.latex?f(x)%20=%20%5Csin(x)">, the black line. The plot also shows the GP mean prediction (blue line) for the squared exponential and Matérn kernels, along with the 95% confidence intervals. For <img src="https://latex.codecogs.com/png.latex?%5Csigma_n%5E2%20=%200">, the model perfectly interpolates the training data. For higher noise levels, the model becomes less certain about the observations, leading to a non-interpolating behavior, and the confidence intervals widen.</p>
 <pre class="shinylive-python" data-engine="python"><code>#| standalone: true
 #| viewerHeight: 475
 
@@ -305,27 +310,40 @@ def server(input, output, session):
 
 app = App(app_ui, server)</code></pre>
 </section>
-</section>
 <section id="applications" class="level2">
 <h2 class="anchored" data-anchor-id="applications">Applications</h2>
 <section id="bayesian-hyperparameter-tuning" class="level3">
 <h3 class="anchored" data-anchor-id="bayesian-hyperparameter-tuning">Bayesian hyperparameter tuning</h3>
-<p>Hyperparameter tuning is a critical yet challenging aspect of training neural networks. Finding the optimal combination of hyperparameters, such as learning rate, batch size, number of layers, and units per layer, can significantly enhance a model’s performance. Traditional methods like grid search and random search often prove to be inefficient and computationally expensive. This is where Bayesian optimization, powered by Gaussian processes, comes into play, offering a smarter approach to hyperparameter tuning.</p>
+<p>Hyperparameter tuning is a critical yet challenging aspect of training neural networks. Finding the optimal combination of hyperparameters, such as learning rate, batch size, number of layers, and units per layer, can significantly enhance a model’s performance. Traditional methods like grid search and random search often prove to be inefficient and computationally expensive. This is where Bayesian optimization, powered by GPs, comes into play, offering a smarter approach to hyperparameter tuning.</p>
 <p>Unlike exhaustive search methods, Bayesian optimization is more sample-efficient, meaning it can find optimal hyperparameters with fewer iterations. It works by</p>
 <ol type="1">
-<li>modeling the objective function (e.g., validation loss) as a Gaussian process in the hyperparameter space</li>
+<li>modeling the objective function (e.g., validation loss) as a GP in the hyperparameter space.</li>
 <li>using an acquisition function to decide where to sample next. The acquisition function balances exploration (sampling in unexplored regions) and exploitation (sampling in regions with low loss) to guide the search towards the global optimum.</li>
 </ol>
 </section>
 <section id="time-series-forecasting" class="level3">
 <h3 class="anchored" data-anchor-id="time-series-forecasting">Time series forecasting</h3>
-<p>Gaussian processes are also widely used in time series forecasting due to their flexibility and ability to model complex patterns in the data. By treating time series data as a function of time, Gaussian processes can capture the underlying dynamics and dependencies in the series. They can provide not only point estimates but also probabilistic forecasts, including prediction intervals that quantify uncertainty.</p>
+<p>GPs are also widely used in time series forecasting due to their flexibility and ability to model complex patterns in the data. By treating time series data as a function of time, Gaussian processes can capture the underlying dynamics and dependencies in the series. They can provide not only point estimates but also probabilistic forecasts, including prediction intervals that quantify uncertainty.</p>
+</section>
+</section>
+<section id="references" class="level2">
+
+
 
 
 </section>
-</section>
 
- ]]></description>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-FORRESTER200950" class="csl-entry">
+Forrester, Alexander I. J., and Andy J. Keane. 2009. <span>“Recent Advances in Surrogate-Based Optimization.”</span> <em>Progress in Aerospace Sciences</em> 45 (1): 50–79. https://doi.org/<a href="https://doi.org/10.1016/j.paerosci.2008.11.001">https://doi.org/10.1016/j.paerosci.2008.11.001</a>.
+</div>
+<div id="ref-frazier2018tutorial" class="csl-entry">
+Frazier, Peter I. 2018. <span>“<span class="nocase">A Tutorial on Bayesian Optimization</span>.”</span> <a href="https://arxiv.org/abs/1807.02811">https://arxiv.org/abs/1807.02811</a>.
+</div>
+<div id="ref-garnett_bayesoptbook_2023" class="csl-entry">
+Garnett, Roman. 2023. <em><span>Bayesian Optimization</span></em>. Cambridge University Press.
+</div>
+</div></section></div> ]]></description>
   <category>machine-learning</category>
   <guid>https://ruglio.github.io/Web/posts/gaussian_processes/gp.html</guid>
   <pubDate>Mon, 24 Jun 2024 22:00:00 GMT</pubDate>
