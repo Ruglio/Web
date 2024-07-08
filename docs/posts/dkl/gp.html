@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-06-25">
 <meta name="description" content="An introduction to Gaussian Processes, discussing their mathematical foundations and practical applications in regression tasks.">
 
-<title>Introduction to Gaussian Processes – RuglioBoi</title>
+<title>Introduction to Gaussian processes – RuglioBoi</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -53,6 +53,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -96,6 +98,33 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-5C5F2JCMQ1"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-5C5F2JCMQ1', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -152,12 +181,17 @@ window.Quarto = {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/Ruglio"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/andrea-ruglioni"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:ruglioni07@gmail.com"> <i class="bi bi-email" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -173,7 +207,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Introduction to Gaussian Processes</h1>
+      <h1 class="title">Introduction to Gaussian processes</h1>
                   <div>
         <div class="description">
           An introduction to Gaussian Processes, discussing their mathematical foundations and practical applications in regression tasks.
@@ -215,16 +249,16 @@ window.Quarto = {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#gaussian-processes" id="toc-gaussian-processes" class="nav-link" data-scroll-target="#gaussian-processes">Gaussian Processes</a>
+  <li><a href="#gaussian-processes" id="toc-gaussian-processes" class="nav-link" data-scroll-target="#gaussian-processes">Gaussian processes</a>
   <ul class="collapse">
-  <li><a href="#making-predictions" id="toc-making-predictions" class="nav-link" data-scroll-target="#making-predictions">Making Predictions</a></li>
+  <li><a href="#making-predictions" id="toc-making-predictions" class="nav-link" data-scroll-target="#making-predictions">Making predictions</a></li>
   </ul></li>
-  <li><a href="#interactive-visualizations" id="toc-interactive-visualizations" class="nav-link" data-scroll-target="#interactive-visualizations">Interactive Visualizations</a>
+  <li><a href="#interactive-visualizations" id="toc-interactive-visualizations" class="nav-link" data-scroll-target="#interactive-visualizations">Interactive visualizations</a>
   <ul class="collapse">
-  <li><a href="#squared-exponential-kernel" id="toc-squared-exponential-kernel" class="nav-link" data-scroll-target="#squared-exponential-kernel">Squared Exponential Kernel</a></li>
+  <li><a href="#squared-exponential-kernel" id="toc-squared-exponential-kernel" class="nav-link" data-scroll-target="#squared-exponential-kernel">Squared exponential kernel</a></li>
   <li><a href="#matérn-kernel" id="toc-matérn-kernel" class="nav-link" data-scroll-target="#matérn-kernel">Matérn kernel</a></li>
   </ul></li>
-  <li><a href="#noisy-observations" id="toc-noisy-observations" class="nav-link" data-scroll-target="#noisy-observations">Noisy Observations</a></li>
+  <li><a href="#noisy-observations" id="toc-noisy-observations" class="nav-link" data-scroll-target="#noisy-observations">Noisy observations</a></li>
   <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications">Applications</a>
   <ul class="collapse">
   <li><a href="#bayesian-hyperparameter-tuning" id="toc-bayesian-hyperparameter-tuning" class="nav-link" data-scroll-target="#bayesian-hyperparameter-tuning">Bayesian hyperparameter tuning</a></li>
@@ -246,7 +280,7 @@ window.Quarto = {
 <p>Welcome to the first installment of our series on deep kernel learning. In this post, we’ll delve into Gaussian processes (GPs) and their application as regressors. We’ll start by exploring what GPs are and why they are powerful tools for regression tasks. In subsequent posts, we’ll build on this foundation to discuss multi-task Gaussian processes and how they can be combined with neural networks to create deep kernel models.</p>
 </section>
 <section id="gaussian-processes" class="level2">
-<h2 class="anchored" data-anchor-id="gaussian-processes">Gaussian Processes</h2>
+<h2 class="anchored" data-anchor-id="gaussian-processes">Gaussian processes</h2>
 <p>To understand Gaussian processes fully, it’s important to briefly mention the Kolmogorov extension theorem. This theorem guarantees the existence of a stochastic process, i.e., a collection of random variables <span class="math inline">\(\{Y_x\}_{x \in \mathcal{X}}, Y_x \in \mathbb{R}\)</span>, that satisfies a specified finite-dimensional distribution. For instance, it ensures that we can define a Gaussian process by specyfing that any finite set of random variables has a multivariate Gaussian distribution, without worrying about the infinite-dimensional nature of the process. Observe that, in a similar matter, we could define a t-student process, by imposing that finite-dimensional distributions are t-student.</p>
 <p>Therefore, similar to a multivariate Gaussian distribution, a Gaussian process <span class="math inline">\(f\)</span> is defined by its mean function <span class="math inline">\(m(\cdot) : \mathcal{X} \to \mathbb{R}\)</span> and covariance function <span class="math inline">\(k(\cdot, \cdot) : \mathcal{X} \times \mathcal{X} \to \mathbb{R}\)</span>:</p>
 <p><span class="math display">\[
@@ -275,7 +309,7 @@ k(x_n, x_1) &amp; \dots &amp; k(x_n, x_n)
 \]</span></p>
 <p>where <span class="math inline">\(\mathbf{m}\)</span> is the vector of mean function values and <span class="math inline">\(\mathbf{K}\)</span> is the covariance matrix of the function values at the input points. This approach allows us to make predictions at new input points <span class="math inline">\(x_*\)</span> by conditioning on the observed data, providing not only point estimates but also uncertainty estimates.</p>
 <section id="making-predictions" class="level3">
-<h3 class="anchored" data-anchor-id="making-predictions">Making Predictions</h3>
+<h3 class="anchored" data-anchor-id="making-predictions">Making predictions</h3>
 <p>To make a prediction <span class="math inline">\(y_* = g(x_*)\)</span> at new input point, we use the joint distribution of the observed outputs <span class="math inline">\(y\)</span> and the function values at <span class="math inline">\(x_*\)</span>, which is given by:</p>
 <p><span class="math display">\[
 \begin{pmatrix}
@@ -301,10 +335,10 @@ s^2(x_*) = k(x_*, x_*) - k(x_*, X) \mathbf{K}^{-1} k(X, x_*).
 </section>
 </section>
 <section id="interactive-visualizations" class="level2">
-<h2 class="anchored" data-anchor-id="interactive-visualizations">Interactive Visualizations</h2>
+<h2 class="anchored" data-anchor-id="interactive-visualizations">Interactive visualizations</h2>
 <p>Let’s explore some interactive plots to better understand how the kernel functions influence the Gaussian process model. Indeed, the choice of the kernel function is crucial in defining the prior over functions, as it determines the smoothness and periodicity of the functions that the GP can model. Therefore, they play a fundamental role in the model’s flexibility and generalization capabilities, and they can be tailored to the specific characteristics of the data at hand. On the other hand, the mean function is usually set constant, as the kernel is flexible enough.</p>
 <section id="squared-exponential-kernel" class="level3">
-<h3 class="anchored" data-anchor-id="squared-exponential-kernel">Squared Exponential Kernel</h3>
+<h3 class="anchored" data-anchor-id="squared-exponential-kernel">Squared exponential kernel</h3>
 <p>The squared exponential kernel (also known as the RBF kernel) is defined as:</p>
 <p><span class="math display">\[
 k_{\text{Exp}}(x, x') = \sigma^2 \exp \left( -\frac{(x - x')^2}{2l^2} \right)
@@ -460,7 +494,7 @@ app = App(app_ui, server)</code></pre>
 </section>
 </section>
 <section id="noisy-observations" class="level2">
-<h2 class="anchored" data-anchor-id="noisy-observations">Noisy Observations</h2>
+<h2 class="anchored" data-anchor-id="noisy-observations">Noisy observations</h2>
 <p>Noise and measurement error are inevitable in real-world data, which can significantly impact the performance and reliability of predictive models. As a result, it is essential to take noise into account when modeling data with GP. We can represent noisy observations as:</p>
 <p><span class="math display">\[
 y = g(x) + \epsilon
@@ -600,7 +634,7 @@ app = App(app_ui, server)</code></pre>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-FORRESTER200950" class="csl-entry" role="listitem">
-Forrester, Alexander I. J., and Andy J. Keane. 2009. <span>“Recent Advances in Surrogate-Based Optimization.”</span> <em>Progress in Aerospace Sciences</em> 45 (1): 50–79. https://doi.org/<a href="https://doi.org/10.1016/j.paerosci.2008.11.001">https://doi.org/10.1016/j.paerosci.2008.11.001</a>.
+Forrester, Alexander I. J., and Andy J. Keane. 2009. <span>“Recent Advances in Surrogate-Based Optimization.”</span> <em>Progress in Aerospace Sciences</em> 45 (1): 50–79. <a href="https://www.sciencedirect.com/science/article/pii/S0376042108000766">https://www.sciencedirect.com/science/article/pii/S0376042108000766</a>.
 </div>
 <div id="ref-frazier2018tutorial" class="csl-entry" role="listitem">
 Frazier, Peter I. 2018. <span>“<span class="nocase">A Tutorial on Bayesian Optimization</span>.”</span> <a href="https://arxiv.org/abs/1807.02811">https://arxiv.org/abs/1807.02811</a>.
@@ -1176,6 +1210,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="Ruglio/Web" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+
+<div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 
