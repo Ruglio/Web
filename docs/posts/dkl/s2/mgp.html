@@ -156,10 +156,7 @@ cookieconsent.run({
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
-
-
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -354,7 +351,7 @@ y = f(x) + \epsilon, \qquad \epsilon \sim \mathcal{N}_T(0, \Sigma),
 <section id="implementation-with-gpytorch" class="level2">
 <h2 class="anchored" data-anchor-id="implementation-with-gpytorch">Implementation with <code>GPyTorch</code></h2>
 <p>Let’s walk through an example of implementing a multitask GP using <code>GPyTorch</code> with the ICM kernel. First of all, we need to install the required packages, including <code>Torch</code>, <code>GPyTorch</code>, <code>matplotlib</code>, and <code>seaborn</code>, <code>numpy</code>.</p>
-<div id="ba354d1a" class="cell" data-pip="true" data-execution_count="1">
+<div id="a87d5c86" class="cell" data-pip="true" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install torch gpytorch matplotlib seaborn numpy pandas</span>
@@ -468,7 +465,7 @@ y = f(x) + \epsilon, \qquad \epsilon \sim \mathcal{N}_T(0, \Sigma),
 <span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>          ncol<span class="op">=</span><span class="dv">3</span>, fancybox<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-multitaskgpicm" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" width="709" height="476">
+<div id="fig-multitaskgpicm" class="quarto-float quarto-figure quarto-figure-center anchored" width="709" height="476" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-multitaskgpicm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="mgp_files/figure-html/fig-multitaskgpicm-output-1.png" id="fig-multitaskgpicm" class="quarto-figure quarto-figure-center anchored figure-img" width="709" height="476">
@@ -510,7 +507,7 @@ y = f(x) + \epsilon, \qquad \epsilon \sim \mathcal{N}_T(0, \Sigma),
 <div aria-describedby="fig-matrices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-matrices" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-matrices-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" width="411" height="431">
+<div id="fig-matrices-1" class="quarto-float quarto-figure quarto-figure-center anchored" width="411" height="431" data-fig-align="center">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-matrices-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="mgp_files/figure-html/fig-matrices-output-1.png" id="fig-matrices-1" class="quarto-figure quarto-figure-center anchored figure-img" data-ref-parent="fig-matrices" width="411" height="431">
@@ -521,7 +518,7 @@ y = f(x) + \epsilon, \qquad \epsilon \sim \mathcal{N}_T(0, \Sigma),
 </div>
 </div>
 <div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-matrices" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-matrices-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" width="389" height="431">
+<div id="fig-matrices-2" class="quarto-float quarto-figure quarto-figure-center anchored" width="389" height="431" data-fig-align="center">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-matrices-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="mgp_files/figure-html/fig-matrices-output-2.png" id="fig-matrices-2" class="quarto-figure quarto-figure-center anchored figure-img" data-ref-parent="fig-matrices" width="389" height="431">
@@ -608,7 +605,7 @@ Figure&nbsp;2
 <span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>          ncol<span class="op">=</span><span class="dv">3</span>, fancybox<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-independentgps" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" width="709" height="476">
+<div id="fig-independentgps" class="quarto-float quarto-figure quarto-figure-center anchored" width="709" height="476" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-independentgps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="mgp_files/figure-html/fig-independentgps-output-1.png" id="fig-independentgps" class="quarto-figure quarto-figure-center anchored figure-img" width="709" height="476">
@@ -620,7 +617,7 @@ Figure&nbsp;2
 </div>
 </div>
 <p>In terms of performance, we can compare the mean squared error (MSE) of the predictions on the test data for the multitask GP with ICM and the independent GPs.</p>
-<div id="60644be0" class="cell" data-execution_count="6">
+<div id="1349dc23" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mean_multi <span class="op">=</span> pred_multi.mean.numpy()</span>
@@ -636,7 +633,7 @@ Figure&nbsp;2
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  })</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="48">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
 

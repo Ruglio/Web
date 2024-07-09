@@ -643,7 +643,7 @@ app = App(app_ui, server)</code></pre>
 <section id="code" class="level2">
 <h2 class="anchored" data-anchor-id="code">Code</h2>
 <p>In this section, we’ll provide a brief overview of how to implement Gaussian processes in Python using the <code>GPyTorch</code> library. The code snippet below demonstrates how to define a GP model with a squared exponential kernel and train it on synthetic data.</p>
-<div id="846c64d0" class="cell" data-execution_count="1">
+<div id="c99c7fce" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -731,7 +731,7 @@ app = App(app_ui, server)</code></pre>
 \mathcal{L}(\theta) = \log p(Y \mid X, \theta)
     = -\frac{1}{2} (Y - \mathbf{m})^\mathsf{T} \mathbf{K}_n^{-1} (Y - \mathbf{m}) - \frac{1}{2} \log |\mathbf{K}_n| - \frac{N}{2} \log(2\pi),
 \]</span></p>
-<p>where <span class="math inline">\(\theta\)</span> are the model parameters, comprising the mean, kernel, and likelihood parameters. Computaionally speaking, the inversion of the kernel matrix <span class="math inline">\(\mathbf{K}_n\)</span> is the most expensive operation, with a complexity of <span class="math inline">\(\mathcal{O}(N^3)\)</span>, where <span class="math inline">\(N\)</span> is the number of training points. Therefore, for very large datasets, approximate inference methods, induct are often used to speed up the computations.</p>
+<p>where <span class="math inline">\(\theta\)</span> are the model parameters, comprising the mean, kernel, and likelihood parameters. Computaionally speaking, the inversion of the kernel matrix <span class="math inline">\(\mathbf{K}_n\)</span> is the most expensive operation, with a complexity of <span class="math inline">\(\mathcal{O}(N^3)\)</span>, where <span class="math inline">\(N\)</span> is the number of training points. Therefore, for very large datasets, approximate inference methods, inducing points, or sparse GPs should be used to reduce the computational burden.</p>
 <p>Lastly, observe that the <code>ExactGP</code> class is the standard GP for Gaussian likelihoods, where the exact marginal log likelihood can be computed in closed form. However, <code>GPyTorch</code> also provides different likelihoods, such as student-t likelihoods (which is more stable if outliers are present) and more. In these cases, the must class <code>ApproximateGP</code> should be used, which allows for approximate inference methods like variational inference. Regarding the loss function, the <code>ExactMarginalLogLikelihood</code> should be replaced by the <code>VariationalELBO</code> object, or other appropriate loss functions for approximate inference.</p>
 </section>
 <section id="applications" class="level2">
