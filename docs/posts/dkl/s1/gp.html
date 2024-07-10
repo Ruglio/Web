@@ -249,6 +249,7 @@ window.Quarto = {
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">machine-learning</div>
+                <div class="quarto-category">gaussian-processes</div>
               </div>
                   </div>
   </div>
@@ -296,9 +297,9 @@ window.Quarto = {
   <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications">Applications</a>
   <ul class="collapse">
   <li><a href="#bayesian-hyperparameter-tuning" id="toc-bayesian-hyperparameter-tuning" class="nav-link" data-scroll-target="#bayesian-hyperparameter-tuning">Bayesian hyperparameter tuning</a></li>
+  <li><a href="#surrogate-optimization" id="toc-surrogate-optimization" class="nav-link" data-scroll-target="#surrogate-optimization">Surrogate optimization</a></li>
   <li><a href="#time-series-forecasting" id="toc-time-series-forecasting" class="nav-link" data-scroll-target="#time-series-forecasting">Time series forecasting</a></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -376,7 +377,7 @@ k_{\text{Exp}}(x, x') = \sigma^2 \exp \left( -\frac{(x - x')^2}{2l^2} \right)
 \]</span></p>
 <p>where <span class="math inline">\(\sigma^2\)</span> is the variance and <span class="math inline">\(l\)</span> is the length scale. Below is an interactive plot that shows how the squared exponential kernel depends on the lengthscale and variance. Notice that with a small length scale, the function is more wiggly. Instead, with a large length scale it is smoother, as the kernel function decays more slowly with distance (i.e., the correlation between faraway points is higher, and they are more similar to each other). Instead, the variance controls the amplitude of the function, with higher values leading to more variability.</p>
 <pre class="shinylive-python" data-engine="python"><code>#| standalone: true
-#| viewerHeight: 475
+#| viewerHeight: auto
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -643,7 +644,7 @@ app = App(app_ui, server)</code></pre>
 <section id="code" class="level2">
 <h2 class="anchored" data-anchor-id="code">Code</h2>
 <p>In this section, we’ll provide a brief overview of how to implement Gaussian processes in Python using the <code>GPyTorch</code> library. The code snippet below demonstrates how to define a GP model with a squared exponential kernel and train it on synthetic data.</p>
-<div id="c99c7fce" class="cell" data-execution_count="1">
+<div id="3cc00463" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -731,7 +732,7 @@ app = App(app_ui, server)</code></pre>
 \mathcal{L}(\theta) = \log p(Y \mid X, \theta)
     = -\frac{1}{2} (Y - \mathbf{m})^\mathsf{T} \mathbf{K}_n^{-1} (Y - \mathbf{m}) - \frac{1}{2} \log |\mathbf{K}_n| - \frac{N}{2} \log(2\pi),
 \]</span></p>
-<p>where <span class="math inline">\(\theta\)</span> are the model parameters, comprising the mean, kernel, and likelihood parameters. Computaionally speaking, the inversion of the kernel matrix <span class="math inline">\(\mathbf{K}_n\)</span> is the most expensive operation, with a complexity of <span class="math inline">\(\mathcal{O}(N^3)\)</span>, where <span class="math inline">\(N\)</span> is the number of training points. Therefore, for very large datasets, approximate inference methods, inducing points, or sparse GPs should be used to reduce the computational burden.</p>
+<p>where <span class="math inline">\(\theta\)</span> are the model parameters, comprising the mean, kernel, and likelihood parameters. Computaionally speaking, the inversion of the kernel matrix <span class="math inline">\(\mathbf{K}_n\)</span> is the most expensive operation, with a complexity of <span class="math inline">\(\mathcal{O}(n^3)\)</span>, where <span class="math inline">\(n\)</span> is the number of training points. Therefore, for very large datasets, approximate inference methods, inducing points, or sparse GPs should be used to reduce the computational burden.</p>
 <p>Lastly, observe that the <code>ExactGP</code> class is the standard GP for Gaussian likelihoods, where the exact marginal log likelihood can be computed in closed form. However, <code>GPyTorch</code> also provides different likelihoods, such as student-t likelihoods (which is more stable if outliers are present) and more. In these cases, the must class <code>ApproximateGP</code> should be used, which allows for approximate inference methods like variational inference. Regarding the loss function, the <code>ExactMarginalLogLikelihood</code> should be replaced by the <code>VariationalELBO</code> object, or other appropriate loss functions for approximate inference.</p>
 </section>
 <section id="applications" class="level2">
@@ -745,16 +746,17 @@ app = App(app_ui, server)</code></pre>
 <li>using an acquisition function to decide where to sample next. The acquisition function balances exploration (sampling in unexplored regions) and exploitation (sampling in regions with low loss) to guide the search towards the global optimum.</li>
 </ol>
 </section>
+<section id="surrogate-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="surrogate-optimization">Surrogate optimization</h3>
+<p>GPs are also used in surrogate optimization, where the objective function is expensive to evaluate, and we aim to find the global optimum with as few evaluations as possible. By modeling the objective function as a GP, we can make informed decisions about where to sample next, focusing on regions that are likely to contain the global optimum. This can significantly reduce the number of evaluations needed to find the best solution.</p>
+</section>
 <section id="time-series-forecasting" class="level3">
 <h3 class="anchored" data-anchor-id="time-series-forecasting">Time series forecasting</h3>
 <p>GPs are also widely used in time series forecasting due to their flexibility and ability to model complex patterns in the data. By treating time series data as a function of time, Gaussian processes can capture the underlying dynamics and dependencies in the series. They can provide not only point estimates but also probabilistic forecasts, including prediction intervals that quantify uncertainty.</p>
+
+
+
 </section>
-</section>
-<section id="references" class="level2">
-
-
-
-
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">

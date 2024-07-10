@@ -1,13 +1,14 @@
 ---
-title: "RuglioBoi"
+title: "Blog"
 listing:
   contents: posts
   sort: "date desc"
   type: default # or table, grid
   categories: true
   sort-ui: false
-  filter-ui: false
+  filter-ui: true
   feed: true
+  fields: [date, title, reading-time, description, categories, image]
 
 page-layout: full
 title-block-banner: true

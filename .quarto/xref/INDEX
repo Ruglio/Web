@@ -1,17 +1,17 @@
 {
-  "index.qmd": {
-    "index.html": "ec6db07d"
-  },
-  "posts/gaussian_processes/gp.qmd": {
-    "gp.html": "91eeb172"
-  },
   "about.qmd": {
-    "about.html": "5f6894f6"
+    "about.html": "b6f0ce18"
   },
-  "posts/post-with-code/index.qmd": {
-    "index.html": "a39ddac1"
+  "index.qmd": {
+    "index.html": "1eb140da"
   },
-  "posts/welcome/index.qmd": {
-    "index.html": "69bf6a5b"
+  "posts/dkl/s1/gp.qmd": {
+    "gp.html": "5a659885"
+  },
+  "posts/dkl/s2/mgp.qmd": {
+    "mgp.html": "e9f725f5"
+  },
+  "posts/dkl/s3/dkl.qmd": {
+    "dkl.html": "56c980e2"
   }
 }

@@ -247,6 +247,7 @@ window.Quarto = {
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">machine-learning</div>
+                <div class="quarto-category">gaussian-processes</div>
               </div>
                   </div>
   </div>
@@ -347,11 +348,16 @@ k(x, x') = \sum_{q=1}^Q k_{\text{input}}^{(q)}(x, x') B_q,
 y = f(x) + \epsilon, \qquad \epsilon \sim \mathcal{N}_T(0, \Sigma),
 \]</span></p>
 <p>where <span class="math inline">\(y\)</span> is the observed output, <span class="math inline">\(f(x)\)</span> is the latent function, and <span class="math inline">\(\Sigma\)</span> is the noise covariance matrix. The flexibility is on the choice of the noise covariance matrix, which can be diagonal <span class="math inline">\(\Sigma = \text{diag}(\sigma_1^2, \ldots, \sigma_T^2)\)</span> (independent noise for each task) or full (correlated noise across tasks). The latter is usually represented as <span class="math inline">\(\Sigma = L L^\mathsf{T}\)</span>, where <span class="math inline">\(L \in \mathbb{R}^{T \times r}\)</span> and <span class="math inline">\(r\)</span> is the rank of the noise covariance matrix. This allows for capturing correlations between the noise terms of different tasks.</p>
+<p>The final covariance matrix with noise is then given by:</p>
+<p><span class="math display">\[
+K_n = K + \mathbf{I} \otimes \Sigma,
+\]</span></p>
+<p>where <span class="math inline">\(K\)</span> is the covariance matrix without noise, <span class="math inline">\(\mathbf{I}\)</span> is the identity matrix, and <span class="math inline">\(\otimes\)</span> denotes the Kronecker product. The noise term is added to the diagonal blocks of the covariance matrix.</p>
 </section>
 <section id="implementation-with-gpytorch" class="level2">
 <h2 class="anchored" data-anchor-id="implementation-with-gpytorch">Implementation with <code>GPyTorch</code></h2>
 <p>Let’s walk through an example of implementing a multitask GP using <code>GPyTorch</code> with the ICM kernel. First of all, we need to install the required packages, including <code>Torch</code>, <code>GPyTorch</code>, <code>matplotlib</code>, and <code>seaborn</code>, <code>numpy</code>.</p>
-<div id="a87d5c86" class="cell" data-pip="true" data-execution_count="1">
+<div id="137373c9" class="cell" data-pip="true" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install torch gpytorch matplotlib seaborn numpy pandas</span>
@@ -465,7 +471,7 @@ y = f(x) + \epsilon, \qquad \epsilon \sim \mathcal{N}_T(0, \Sigma),
 <span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>          ncol<span class="op">=</span><span class="dv">3</span>, fancybox<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-multitaskgpicm" class="quarto-float quarto-figure quarto-figure-center anchored" width="709" height="476" data-fig-align="center">
+<div id="fig-multitaskgpicm" class="quarto-float quarto-figure quarto-figure-center anchored" height="476" width="709" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-multitaskgpicm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="mgp_files/figure-html/fig-multitaskgpicm-output-1.png" id="fig-multitaskgpicm" class="quarto-figure quarto-figure-center anchored figure-img" width="709" height="476">
@@ -498,7 +504,7 @@ y = f(x) + \epsilon, \qquad \epsilon \sim \mathcal{N}_T(0, \Sigma),
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>sns.heatmap(Sigma, annot<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, cbar<span class="op">=</span><span class="va">False</span>, square<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="st">'Task 1'</span>, <span class="st">'Task 2'</span>])</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels([])</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels([<span class="st">'Task 1'</span>, <span class="st">'Task 2'</span>])</span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Noise covariance matrix'</span>)</span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -507,7 +513,7 @@ y = f(x) + \epsilon, \qquad \epsilon \sim \mathcal{N}_T(0, \Sigma),
 <div aria-describedby="fig-matrices-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-matrices" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-matrices-1" class="quarto-float quarto-figure quarto-figure-center anchored" width="411" height="431" data-fig-align="center">
+<div id="fig-matrices-1" class="quarto-float quarto-figure quarto-figure-center anchored" height="431" width="411" data-fig-align="center">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-matrices-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="mgp_files/figure-html/fig-matrices-output-1.png" id="fig-matrices-1" class="quarto-figure quarto-figure-center anchored figure-img" data-ref-parent="fig-matrices" width="411" height="431">
@@ -518,10 +524,10 @@ y = f(x) + \epsilon, \qquad \epsilon \sim \mathcal{N}_T(0, \Sigma),
 </div>
 </div>
 <div class="cell-output cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-matrices" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-matrices-2" class="quarto-float quarto-figure quarto-figure-center anchored" width="389" height="431" data-fig-align="center">
+<div id="fig-matrices-2" class="quarto-float quarto-figure quarto-figure-center anchored" height="431" width="411" data-fig-align="center">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-matrices-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="mgp_files/figure-html/fig-matrices-output-2.png" id="fig-matrices-2" class="quarto-figure quarto-figure-center anchored figure-img" data-ref-parent="fig-matrices" width="389" height="431">
+<img src="mgp_files/figure-html/fig-matrices-output-2.png" id="fig-matrices-2" class="quarto-figure quarto-figure-center anchored figure-img" data-ref-parent="fig-matrices" width="411" height="431">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-matrices-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -605,7 +611,7 @@ Figure&nbsp;2
 <span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>          ncol<span class="op">=</span><span class="dv">3</span>, fancybox<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-independentgps" class="quarto-float quarto-figure quarto-figure-center anchored" width="709" height="476" data-fig-align="center">
+<div id="fig-independentgps" class="quarto-float quarto-figure quarto-figure-center anchored" height="476" width="709" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-independentgps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="mgp_files/figure-html/fig-independentgps-output-1.png" id="fig-independentgps" class="quarto-figure quarto-figure-center anchored figure-img" width="709" height="476">
@@ -617,7 +623,7 @@ Figure&nbsp;2
 </div>
 </div>
 <p>In terms of performance, we can compare the mean squared error (MSE) of the predictions on the test data for the multitask GP with ICM and the independent GPs.</p>
-<div id="1349dc23" class="cell" data-execution_count="6">
+<div id="bd908590" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mean_multi <span class="op">=</span> pred_multi.mean.numpy()</span>

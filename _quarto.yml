@@ -3,16 +3,22 @@ project:
   output-dir: docs
 
 website:
-  title: "RuglioBoi_blog"
-  site-url: https://www.RuglioBoi.io
-  description: "A great sample blog"
+  title: "RuglioBoi"
+  google-analytics:
+    tracking-id: "G-5C5F2JCMQ1"
+  cookie-consent: true
+  site-url: https://ruglio.github.io/Web/
+  description: "AR's personal website"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/Ruglio
+      - icon: linkedin
+        href: https://www.linkedin.com/in/andrea-ruglioni
+      - icon: envelope
+        aria-label: email
+        href: mailto:ruglioni07@gmail.com
 format:
   html:
     theme:
