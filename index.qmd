@@ -48,8 +48,9 @@ listing:
     categories: false
     sort-ui: false
     filter-ui: false
-    fields: [title, subtitle, author]
+    fields: [title, subtitle, author, date]
     max-items: 3
+    image-align: left
 
 format:
   html:
@@ -67,13 +68,13 @@ Welcome to my personal website! I'm a PhD student at the Swiss Finance Institute
 Here, you can find my latest blog posts, publications, teaching experience, and more.
 Feel free to reach out if you have any questions or comments.
 
-[Learn more about me &rarr;](/about){.about-links .subtitle}
+[Learn more about me &rarr;](/about/index.qmd)
 
 :::
 
 
 
-## [Publications &rarr;](../publications)
+## [Publications &rarr;](/publications/index.qmd)
 
 ::: {#publications}
 
@@ -81,7 +82,7 @@ Feel free to reach out if you have any questions or comments.
 
 
 
-## [Blog &rarr;](../blog)
+## [Blog &rarr;](blog/index.qmd)
 
 ::: {#blog}
 

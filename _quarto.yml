@@ -38,7 +38,7 @@ website:
         aria-label: "Publications"
         href: publications/index.html
 
-  page-footer:  
+  page-footer:
     left: >-
      &#169; 2024 Andrea Ruglioni
     center: |
