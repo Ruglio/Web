@@ -7,18 +7,6 @@
     padding: 0.5%;
 }
 
-.section1, .section2 {
-    padding-top: 30px;
-    padding-bottom: 30px;
-}
-
-
-.section2 {
-    margin: -25px;
-    padding: 25px;
-    border-radius: 25px;
-}
-
 body {
     overflow-x: hidden;
 }
@@ -27,7 +15,7 @@ body {
     position: relative;
 }
   
-.active:after {
+a.nav-link.active::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -36,17 +24,12 @@ body {
     height: 3px;
 }
 
-.quarto-title-banner {
-    background-position-y: center;
-}
-
 .about-image {
     width: 40% !important;
     align-self: center;
 }
 
 .navbar-brand > img {
-    /* background: url("logo.svg"); */
     background-size: 40px;
     background-repeat: no-repeat;
     width: 100%;
