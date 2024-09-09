@@ -1,6 +1,6 @@
 ---
 pagetitle: About Me
-image: ../assets/profile.png
+image: ../assets/profile.jpg
 about:
   template: trestles
   id: hero-heading
@@ -48,7 +48,7 @@ Get in touch by [sending me an email](mailto:andrea.ruglioni@epfl.ch) {{< fa fea
 
 :::: {.grid}
 
-::: {.g-col-6}
+::: {.g-col-12 .g-col-md-6}
 
 **PhD in Quantitative Finance**  
 *Swiss Finance Institute, EPFL*  
@@ -56,7 +56,7 @@ Get in touch by [sending me an email](mailto:andrea.ruglioni@epfl.ch) {{< fa fea
 
 :::
 
-::: {.g-col-6}
+::: {.g-col-12 .g-col-md-6}
 
 **MSc in Mathematical Engineering**  
 *Politecnico di Torino*  
@@ -64,7 +64,7 @@ Get in touch by [sending me an email](mailto:andrea.ruglioni@epfl.ch) {{< fa fea
 
 :::
 
-::: {.g-col-6}
+::: {.g-col-12 .g-col-md-6}
 
 **Erasmus+ Exchange Program**  
 *KTH Royal Institute of Technology*  
@@ -72,7 +72,7 @@ Get in touch by [sending me an email](mailto:andrea.ruglioni@epfl.ch) {{< fa fea
 
 :::
 
-::: {.g-col-6}
+::: {.g-col-12 .g-col-md-6}
 
 **BSc in Mathematics for Engineering**  
 *Politecnico di Torino*  

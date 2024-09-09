@@ -1,0 +1,7 @@
+body {
+    overflow-x: auto;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}

@@ -1,6 +1,6 @@
 ---
 title: Andrea Ruglioni
-subtitle: Doctoral Candidate in quantitative finance<br>Swiss Finance Institute, EPFL
+subtitle: Doctoral candidate in quantitative finance<br>Swiss Finance Institute, EPFL
 image: assets/logo.svg
 image-alt: logo image
 
@@ -37,7 +37,7 @@ listing:
     filter-ui: false
     fields: [title, subtitle, image]
     max-items: 3
-    image-height: "200"
+    image-height: "150"
 
   - id: publications
     contents: 
@@ -73,16 +73,16 @@ Feel free to reach out if you have any questions or comments.
 
 
 
-## [Blog &rarr;](../blog)
+## [Publications &rarr;](../publications)
 
-::: {#blog}
+::: {#publications}
 
 :::
 
 
 
-## [Publications &rarr;](../publications)
+## [Blog &rarr;](../blog)
 
-::: {#publications}
+::: {#blog}
 
 :::

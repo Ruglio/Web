@@ -19,3 +19,5 @@ freeze: true
 format: 
   html:
     code-fold: true
+    css: ../assets/style_blog.css
+

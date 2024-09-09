@@ -13,12 +13,12 @@ nocite: |
 bibliography: refs.bib
 ---
 
-In this post, we explore Deep Kernel Learning (DKL), a hybrid approach that combines the strengths of deep neural networks (DNNs) with Gaussian Processes (GPs). DKL offers a powerful framework for modeling complex data patterns, enhancing the predictive capabilities and interpretability of standard GPs.
-If you are new to Gaussian Processes, we recommend reading our previous posts on [Gaussian Processes](../s1/index.qmd) and [Multi-output Gaussian Processes](../s2/index.qmd) before diving into DKL.
+In this post, we explore deep kernel learning (DKL), a hybrid approach that combines the strengths of deep neural networks (DNNs) with Gaussian processes (GPs). DKL offers a powerful framework for modeling complex data patterns, enhancing the predictive capabilities and interpretability of standard GPs.
+If you are new to Gaussian processes, we recommend reading our previous posts on [Gaussian processes](../s1/index.qmd) and [Multi-output Gaussian processes](../s2/index.qmd) before diving into DKL.
 
-## Gaussian Processes (GPs)
+## Gaussian processes (GPs)
 
-Gaussian Processes are non-parametric models used for regression and classification tasks. A GP is defined by its mean function $m(\cdot)$ and covariance function (kernel) $k(\cdot, \cdot)$.
+Gaussian processes are non-parametric models used for regression and classification tasks. A GP is defined by its mean function $m(\cdot)$ and covariance function (kernel) $k(\cdot, \cdot)$.
 
 $$
 f \sim \mathcal{GP}(m, k)
@@ -46,7 +46,7 @@ Here, we can notice how much the kernel is important.
 It plays a vital role both in the mean and the variance of the predictive distribution (that is why often the mean is set to zero).
 Therefore, its choice is crucial for the model's performance, and ad-hoc kernels are designed to capture specific patterns in the data.
 
-## Deep Kernel Learning (DKL)
+## Deep kernel learning (DKL)
 
 DKL integrates DNNs with GPs by using a DNN to learn a representation of the data, which is then used to define the GP kernel. This allows the GP to capture complex patterns in the data that a standard kernel might miss.
 
@@ -123,7 +123,7 @@ Now, we can define the McCormick function and generate the synthetic dataset for
 
 Regarding the deep neural network, we define a simple feedforward network with two hidden layers and a softplus activation function.
 The architecture is defined in the `FeatureExtractor` class, and it is shown in @fig-nn.
-The remaining part is the same as the standard GP model, and it is deeply explained in the [Gaussian Processes](../s1/index.qmd) post.
+The remaining part is the same as the standard GP model, and it is deeply explained in the [Gaussian processes](../s1/index.qmd) post.
 
 ```{python}
 
@@ -273,10 +273,11 @@ fig.add_trace(go.Surface(z=true_y, x=x1_test, y=x2_test, colorscale='Reds', opac
 fig.add_trace(go.Scatter3d(x=train_x[:, 0].numpy(), y=train_x[:, 1].numpy(), z=train_y.numpy(), mode='markers', marker=dict(size=3, color='black', opacity=0.8), name='Train Points'))
 
 fig.update_layout(scene=dict(xaxis_title='X1', yaxis_title='X2', zaxis_title='Y'))
+
 fig.show()
 ```
 
-The interactive 3D plot above shows the predictions of the DKL(blue) and GP (green) models on the McCormick function (red). The DKL model captures the complex patterns of the function more accurately than the GP model, providing a better fit to the true surface.
+The interactive 3D plot above shows the predictions of the DKL (blue) and GP (green) models on the McCormick function (red). The DKL model captures the complex patterns of the function more accurately than the GP model, providing a better fit to the true surface.
 
 In terms of performance, we can compare the mean squared error (MSE) of the DKL and GP models on the test data (i.e., the McCormick function evaluated on a grid 100x100).
 
