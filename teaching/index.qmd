@@ -23,6 +23,7 @@ This course gives an introduction to probability theory and stochastic calculus 
 *Fall 2023*, TA as graduate student
 
 The course contents will mainly be based on the following areas:
+
 - Queueing models based on Markov processes, including models for queueing networks.
 - Models for inventory optimization, deterministic as well as stochastic.
 - Scheduling methods for production systems and transport systems, and route planning
