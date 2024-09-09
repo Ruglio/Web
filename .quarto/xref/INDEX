@@ -1,17 +1,29 @@
 {
-  "about.qmd": {
-    "about.html": "b6f0ce18"
+  "about/index.qmd": {
+    "index.html": "10c385e3"
+  },
+  "blog/dkl/s1/index.qmd": {
+    "index.html": "76cb3bc0"
+  },
+  "blog/dkl/s2/index.qmd": {
+    "index.html": "8f3cb54e"
+  },
+  "blog/dkl/s3/index.qmd": {
+    "index.html": "3fa4fc49"
+  },
+  "blog/index.qmd": {
+    "index.html": "76e5de0f"
+  },
+  "publications/index.qmd": {
+    "index.html": "c1b9a4c2"
+  },
+  "publications/WEC/index.qmd": {
+    "index.html": "d1e69020"
+  },
+  "teaching/index.qmd": {
+    "index.html": "bdbae5e9"
   },
   "index.qmd": {
-    "index.html": "1eb140da"
-  },
-  "posts/dkl/s1/gp.qmd": {
-    "gp.html": "5a659885"
-  },
-  "posts/dkl/s2/mgp.qmd": {
-    "mgp.html": "e9f725f5"
-  },
-  "posts/dkl/s3/dkl.qmd": {
-    "dkl.html": "56c980e2"
+    "index.html": "95db8a68"
   }
 }

@@ -1,17 +1,88 @@
 ---
-title: "Blog"
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default # or table, grid
-  categories: true
-  sort-ui: false
-  filter-ui: true
-  feed: true
-  fields: [date, title, reading-time, description, categories, image]
+title: Andrea Ruglioni
+subtitle: Doctoral Candidate in quantitative finance<br>Swiss Finance Institute, EPFL
+image: assets/logo.svg
+image-alt: logo image
+
+about:
+  template: solana
+  id: hero-heading
+  links:
+    - icon: github
+      aria-label: GitHub
+      href: https://github.com/Ruglio
+    - icon: linkedin
+      aria-label: "LinkedIn"
+      href: https://linkedin.com/in/andrea-ruglioni
+    - text: "{{< ai orcid >}}"
+      href: https://orcid.org/0009-0003-5208-5907
+    - text: "{{< ai google-scholar >}}"
+      aria-label: "Google Scholar"
+      href: https://scholar.google.com/citations?user=3sdazUQAAAAJ&hl=en
+    - icon: envelope
+      aria-label: email
+      href: mailto:andrea.ruglioni@epfl.ch
+
+listing: 
+
+  - id: blog
+    contents: 
+      - "../blog/*/**/index.qmd"
+      - "../blog/*/**/index.md"
+    sort: date desc
+    type: grid
+    grid-columns: 3
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    fields: [title, subtitle, image]
+    max-items: 3
+    image-height: "200"
+
+  - id: publications
+    contents: 
+      - "../publications/*/**/index.qmd"
+      - "../publications/*/**/index.md"
+    sort: date desc
+    type: default
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    fields: [title, subtitle, author]
+    max-items: 3
+
+format:
+  html:
+    css: assets/style_personalized.css
 
 page-layout: full
-title-block-banner: true
 ---
 
 
+
+::: {#hero-heading}
+
+Welcome to my personal website! I'm a PhD student at the Swiss Finance Institute, EPFL.
+
+Here, you can find my latest blog posts, publications, teaching experience, and more.
+Feel free to reach out if you have any questions or comments.
+
+[Learn more about me &rarr;](/about){.about-links .subtitle}
+
+:::
+
+
+
+## [Blog &rarr;](../blog)
+
+::: {#blog}
+
+:::
+
+
+
+## [Publications &rarr;](../publications)
+
+::: {#publications}
+
+:::

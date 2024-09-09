@@ -1,0 +1,19 @@
+---
+pagetitle: "Blog"
+author: ""
+listing:
+  contents: .
+  fields: [image, date, title, description, reading-time]
+  sort: "date desc"
+  type: default
+  image-align: right
+  categories: false
+  sort-ui: false
+  filter-ui: false
+  feed: true
+
+title-block-banner: false
+comments: false
+---
+
+

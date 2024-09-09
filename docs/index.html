@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Blog – RuglioBoi</title>
+<title>Andrea Ruglioni</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,19 +25,15 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
+<link href="./assets/logo.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/quarto-listing/list.min.js"></script>
 <script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/cookie-consent/cookie-consent.js"></script>
 <link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
@@ -45,19 +41,11 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -75,20 +63,48 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    const listingTargetEl = window.document.querySelector('#listing-blog .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories','listing-image',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-subtitle','listing-image',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+    window['quarto-listings']['listing-blog'] = new List('listing-blog', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-publications .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-subtitle','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-publications'] = new List('listing-publications', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -159,44 +175,44 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="RuglioBoi" href="index.xml" data-external="1"></head>
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/style_personalized.css">
+</head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./assets/logo.svg" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">RuglioBoi</span>
+    <span class="navbar-title">Andrea Ruglioni</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="./about/index.html"> 
 <span class="menu-text">About</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/Ruglio"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./blog/index.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/andrea-ruglioni"> <i class="bi bi-linkedin" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./teaching/index.html"> 
+<span class="menu-text">Teaching</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="mailto:ruglioni07@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="email">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./publications/index.html"> 
+<span class="menu-text">Publications</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -207,154 +223,126 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Blog</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page-left">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="deep-learning">deep-learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="gaussian-processes">gaussian-processes <span class="quarto-category-count">(3)</span></div><div class="category" data-category="machine-learning">machine-learning <span class="quarto-category-count">(3)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content page-columns page-full column-page" id="quarto-document-content">
 
 
 
 
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="listing-actions-group">
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
+<div class="quarto-about-solana column-page">
+  <div class="about-entity">
+    <div class="entity-contents">
+      <header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Andrea Ruglioni</h1>
+<p class="subtitle lead">Doctoral Candidate in quantitative finance<br>Swiss Finance Institute, EPFL</p>
+</div>
+<div class="quarto-title-meta column-page">
+  </div>
+</header> <div class="about-links">
+  <a href="https://github.com/Ruglio" class="about-link" rel="" target="">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text"></span>
+  </a>
+  <a href="https://linkedin.com/in/andrea-ruglioni" class="about-link" rel="" target="">
+    <i class="bi bi-linkedin"></i>
+     <span class="about-link-text"></span>
+  </a>
+  <a href="https://orcid.org/0009-0003-5208-5907" class="about-link" rel="" target="">
+     <span class="about-link-text"><i class="ai  ai-orcid"></i></span>
+  </a>
+  <a href="https://scholar.google.com/citations?user=3sdazUQAAAAJ&amp;hl=en" class="about-link" rel="" target="">
+     <span class="about-link-text"><i class="ai  ai-google-scholar"></i></span>
+  </a>
+  <a href="mailto:andrea.ruglioni@epfl.ch" class="about-link" rel="" target="">
+    <i class="bi bi-envelope"></i>
+     <span class="about-link-text"></span>
+  </a>
+</div>
+      <div class="about-contents"><div id="hero-heading">
+<p>Welcome to my personal website! I’m a PhD student at the Swiss Finance Institute, EPFL.</p>
+<p>Here, you can find my latest blog posts, publications, teaching experience, and more. Feel free to reach out if you have any questions or comments.</p>
+<p><a href=".\about" class="about-links subtitle">Learn more about me →</a></p>
+</div></div>
     </div>
+    <img src="assets/logo.svg" alt="logo image" class="about-image
+  rounded " style="width: 15em;">
+  </div>
 </div>
+
+<section id="blog" class="level2">
+<h2 data-anchor-id="blog"><a href="../blog">Blog →</a></h2>
+<div id="listing-blog" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="machine-learning,deep-learning,gaussian-processes" data-listing-date-sort="1720562400000" data-listing-file-modified-sort="1725873438407" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1828">
+<a href="./blog/dkl/s3/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./blog/dkl/s3/featured.png" class="thumbnail-image card-img" style="height: 200;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Deep kernel learning
+</h5>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="machine-learning,gaussian-processes" data-listing-date-sort="1720389600000" data-listing-file-modified-sort="1725873467485" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2002">
+<a href="./blog/dkl/s2/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./blog/dkl/s2/featured.png" class="thumbnail-image card-img" style="height: 200;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Multi-task Gaussian processes
+</h5>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="machine-learning,gaussian-processes" data-listing-date-sort="1719266400000" data-listing-file-modified-sort="1725873561108" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3280">
+<a href="./blog/dkl/s1/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./blog/dkl/s1/featured.png" class="thumbnail-image card-img" style="height: 200;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Introduction to Gaussian processes
+</h5>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+</section>
+<section id="publications" class="level2">
+<h2 data-anchor-id="publications"><a href="../publications">Publications →</a></h2>
+<div id="listing-publications" class="quarto-listing quarto-listing-container-default">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="machine-learning,deep-learning,gaussian-processes" data-listing-date-sort="1720562400000" data-listing-file-modified-sort="1720623867350" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1822">
-<div class="thumbnail">
-<p><a href="./posts/dkl/s3/dkl.html" class="no-external"></a></p><a href="./posts/dkl/s3/dkl.html" class="no-external">
-<p class="card-img-top"><img src="posts\dkl\s3\nn.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/dkl/s3/dkl.html" class="no-external"></a></p>
-</div>
+<div class="quarto-post image-right" data-index="0" data-categories="Wave energy converters,Optimal co-design,Surrogate modeling,Deep kernel learning" data-listing-date-sort="1725919200000" data-listing-file-modified-sort="1725873267622" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="105">
 <div class="body">
 <h3 class="no-anchor listing-title">
-<a href="./posts/dkl/s3/dkl.html" class="no-external">Deep kernel learning</a>
+<a href="./publications/WEC/index.html" class="no-external">Optimizing wave energy converters: A co-design approach using surrogate modeling</a>
 </h3>
 <div class="listing-subtitle">
-<a href="./posts/dkl/s3/dkl.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('machine-learning'); return false;">
-machine-learning
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('deep-learning'); return false;">
-deep-learning
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('gaussian-processes'); return false;">
-gaussian-processes
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/dkl/s3/dkl.html" class="no-external">Deep Kernel Learning (DKL) combines deep neural networks with Gaussian Processes to model complex data patterns. In this post, we explore DKL and implement a DKL model using the GPyTorch library in Python.</a>
+<a href="./publications/WEC/index.html" class="no-external">A joint optimization of the physical structure and control system of wave energy converters using deep kernel learning as a surrogate model</a>
 </div>
 </div>
 <div class="metadata">
-<a href="./posts/dkl/s3/dkl.html" class="no-external">
-<div class="listing-date">
-Jul 10, 2024
-</div>
-<div class="listing-reading-time">
-10 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="machine-learning,gaussian-processes" data-listing-date-sort="1720389600000" data-listing-file-modified-sort="1720613216631" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1978">
-<div class="thumbnail">
-<p><a href="./posts/dkl/s2/mgp.html" class="no-external"></a></p><a href="./posts/dkl/s2/mgp.html" class="no-external">
-<p><img loading="lazy" src="./posts/dkl/s2/mgp.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/dkl/s2/mgp.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/dkl/s2/mgp.html" class="no-external">Multi-task Gaussian processes</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/dkl/s2/mgp.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('machine-learning'); return false;">
-machine-learning
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('gaussian-processes'); return false;">
-gaussian-processes
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/dkl/s2/mgp.html" class="no-external">Learn how to model multiple correlated outputs using the intrinsic model of coregionalization (ICM) and the linear model of coregionalization (LMC).</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/dkl/s2/mgp.html" class="no-external">
-<div class="listing-date">
-Jul 8, 2024
-</div>
-<div class="listing-reading-time">
-10 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="machine-learning,gaussian-processes" data-listing-date-sort="1719266400000" data-listing-file-modified-sort="1720613715235" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3280">
-<div class="thumbnail">
-<p><a href="./posts/dkl/s1/gp.html" class="no-external"></a></p><a href="./posts/dkl/s1/gp.html" class="no-external">
-<p><img loading="lazy" src="./posts/dkl/s1/gp.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/dkl/s1/gp.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/dkl/s1/gp.html" class="no-external">Introduction to Gaussian processes</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/dkl/s1/gp.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('machine-learning'); return false;">
-machine-learning
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('gaussian-processes'); return false;">
-gaussian-processes
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/dkl/s1/gp.html" class="no-external">An introduction to Gaussian Processes, discussing their mathematical foundations and practical applications in regression tasks.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/dkl/s1/gp.html" class="no-external">
-<div class="listing-date">
-Jun 25, 2024
-</div>
-<div class="listing-reading-time">
-17 min
+<p><a href="./publications/WEC/index.html" class="no-external"></a></p><a href="./publications/WEC/index.html" class="no-external">
+<div class="listing-author">
+Andrea Ruglioni, Edoardo Pasta, Nicolàs Faedo, Paolo Brandimarte
 </div>
 </a>
 </div>
@@ -363,7 +351,14 @@ Jun 25, 2024
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div></main> <!-- /main -->
+</div>
+
+
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -528,13 +523,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   } else {
     toggleColorMode(false);
   }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
@@ -932,14 +920,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-      &nbsp;
-    </div>   
+<p>© 2024 Andrea Ruglioni</p>
+</div>   
     <div class="nav-footer-center">
-
+<p><a class="footer-link" href="https://github.com/Ruglio" title="github"><i class="fa-brands fa-github" aria-label="github"></i></a> <a class="footer-link" href="https://linkedin.com/in/andrea-ruglioni" title="LinkedIn"><i class="fa-brands fa-linkedin" aria-label="linkedin"></i></a> <a class="footer-link" href="https://orcid.org/0009-0003-5208-5907" title="orcid"><i class="ai  ai-orcid"></i></a> <a class="footer-link" href="https://scholar.google.com/citations?user=3sdazUQAAAAJ&amp;hl=en" title="Google Scholar"><i class="ai  ai-google-scholar"></i></a> <a class="footer-link" href="mailto:andrea.ruglioni@epfl.ch" title="envelope"><i class="fa-solid fa-envelope" aria-label="envelope"></i></a> <a class="footer-link" href="blog/index.xml" title="RSS Feed"><i class="fa-solid fa-rss" aria-label="rss"></i></a></p>
 <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
-      &nbsp;
-    </div>
+<p>Made with <a href="https://quarto.org">Quarto</a><br> <a href="https://github.com/Ruglio/web">Source code on <i class="fa-brands fa-github" aria-label="github"></i> GitHub</a></p>
+</div>
   </div>
 </footer>
 

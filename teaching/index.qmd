@@ -1,0 +1,26 @@
+---
+pagetitle: Teachings
+---
+
+## Courses
+
+### [Applied Systems Engineering](https://www.kth.se/student/kurser/kurs/SF2866?l=en)
+
+*KTH Royal Institute of Technology*
+*Fall 2023*
+
+- Queueing models based on Markov processes
+- Inventory optimization models
+- Scheduling methods for production and transport systems
+- Route planning
+
+### [Probability and Stochastic Calculus](https://edu.epfl.ch/coursebook/en/probability-and-stochastic-calculus-FIN-415)
+
+*EPFL*
+*Fall 2024*
+
+- Random variables, limit theorems
+- Markov processes, Kalman filter
+- Ito calculus, SDEs
+- Girsanov theorem, jump processes
+- Numerical simulation

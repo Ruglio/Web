@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ruglio.github.io/Web/posts/dkl/s3/dkl.html</loc>
-    <lastmod>2024-07-10T15:04:27.350Z</lastmod>
+    <loc>https://ruglio.github.io/Web/teaching/index.html</loc>
+    <lastmod>2024-09-08T16:09:00.409Z</lastmod>
   </url>
   <url>
-    <loc>https://ruglio.github.io/Web/posts/dkl/s1/gp.html</loc>
-    <lastmod>2024-07-10T12:15:15.235Z</lastmod>
+    <loc>https://ruglio.github.io/Web/publications/index.html</loc>
+    <lastmod>2024-09-09T09:11:06.076Z</lastmod>
   </url>
   <url>
-    <loc>https://ruglio.github.io/Web/about.html</loc>
-    <lastmod>2024-07-08T11:40:03.756Z</lastmod>
+    <loc>https://ruglio.github.io/Web/blog/index.html</loc>
+    <lastmod>2024-09-08T13:03:51.611Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ruglio.github.io/Web/blog/dkl/s2/index.html</loc>
+    <lastmod>2024-09-09T09:17:47.485Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ruglio.github.io/Web/about/index.html</loc>
+    <lastmod>2024-09-09T09:51:41.776Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ruglio.github.io/Web/blog/dkl/s1/index.html</loc>
+    <lastmod>2024-09-09T09:19:21.108Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ruglio.github.io/Web/blog/dkl/s3/index.html</loc>
+    <lastmod>2024-09-09T09:17:18.407Z</lastmod>
   </url>
   <url>
     <loc>https://ruglio.github.io/Web/index.html</loc>
-    <lastmod>2024-06-30T17:01:57.898Z</lastmod>
+    <lastmod>2024-09-09T09:51:28.838Z</lastmod>
   </url>
   <url>
-    <loc>https://ruglio.github.io/Web/posts/dkl/s2/mgp.html</loc>
-    <lastmod>2024-07-10T12:06:56.631Z</lastmod>
+    <loc>https://ruglio.github.io/Web/publications/WEC/index.html</loc>
+    <lastmod>2024-09-09T09:14:27.622Z</lastmod>
   </url>
 </urlset>

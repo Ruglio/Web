@@ -2,29 +2,77 @@ project:
   type: website
   output-dir: docs
 
+
+
 website:
-  title: "RuglioBoi"
+
+  title: "Andrea Ruglioni"
   google-analytics:
     tracking-id: "G-5C5F2JCMQ1"
   cookie-consent: true
   site-url: https://ruglio.github.io/Web/
-  description: "AR's personal website"
+  description: "Doctoral candidate in quantitative finance at Swiss Finance Institute, EPFL"
+  favicon: assets/logo.svg
+  page-navigation: true
+  back-to-top-navigation: false
+  search: false
+
   navbar:
+    logo: assets/logo.svg
+    # tools:
+    #   - icon: github
+    #     href: https://github.com/Ruglio
+    #   - icon: linkedin
+    #     href: https://www.linkedin.com/in/andrea-ruglioni
+    #   - icon: envelope
+    #     aria-label: email
+    #     href: mailto:ruglioni07@gmail.com
     right:
-      - about.qmd
-      - icon: github
-        href: https://github.com/Ruglio
-      - icon: linkedin
-        href: https://www.linkedin.com/in/andrea-ruglioni
-      - icon: envelope
-        aria-label: email
-        href: mailto:ruglioni07@gmail.com
-format:
+      - text: About
+        aria-label: "About Me"
+        href: about/index.html
+      - text: Blog
+        aria-label: "Blog"
+        href: blog/index.html
+      - text: Teaching
+        aria-label: "Teaching"
+        href: teaching/index.html
+      - text: Publications
+        aria-label: "Publications"
+        href: publications/index.html
+
+  page-footer:  
+    left: >-
+     &#169; 2024 Andrea Ruglioni
+    center: |
+      <a class="footer-link" href="https://github.com/Ruglio" title="github">{{< fa brands github >}}</a>
+      <a class="footer-link" href="https://linkedin.com/in/andrea-ruglioni" title="LinkedIn">{{< fa brands linkedin >}}</a>
+      <a class="footer-link" href="https://orcid.org/0009-0003-5208-5907" title="orcid">{{< ai orcid >}}</a>
+      <a class="footer-link" href="https://scholar.google.com/citations?user=3sdazUQAAAAJ&hl=en" title="Google Scholar">{{< ai google-scholar >}}</a>
+      <a class="footer-link" href=mailto:andrea.ruglioni@epfl.ch title="envelope">{{< fa envelope >}}</a>
+      <a class="footer-link" href="blog/index.xml" title="RSS Feed">{{< fa rss >}}</a>
+    # <a class="footer-link" href="">{{< fa brands medium" >}}</a>
+    right: 
+      Made with [Quarto](https://quarto.org)<br>
+      [Source code on {{< fa brands github >}} GitHub](https://github.com/Ruglio/web)
+
+
+
+format: 
   html:
     theme:
-      light: simplex
-      dark: darkly
-    css: styles.css
+      light: [flatly, assets/theme_light.scss]
+      dark: [darkly, assets/theme_dark.scss]
+    css: assets/styles.css
+    code-link: true
+    lightbox: true
+    mainfont: "Helvetica"
 
 
 
+page-layout: full
+
+
+
+execute: 
+  freeze: auto
