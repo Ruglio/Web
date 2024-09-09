@@ -15,7 +15,7 @@ body {
     position: relative;
 }
   
-a.navbar-link.active::after {
+a.nav-link.active::after {
     content: "";
     position: absolute;
     bottom: 0;
