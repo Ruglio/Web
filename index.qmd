@@ -37,7 +37,7 @@ listing:
     filter-ui: false
     fields: [title, subtitle, image]
     max-items: 3
-    image-height: "150"
+    image-height: 200px
 
   - id: publications
     contents: 

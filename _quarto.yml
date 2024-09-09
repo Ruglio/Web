@@ -2,10 +2,7 @@ project:
   type: website
   output-dir: docs
 
-
-
 website:
-
   title: "Andrea Ruglioni"
   google-analytics:
     tracking-id: "G-5C5F2JCMQ1"
@@ -51,11 +48,9 @@ website:
       <a class="footer-link" href="https://scholar.google.com/citations?user=3sdazUQAAAAJ&hl=en" title="Google Scholar">{{< ai google-scholar >}}</a>
       <a class="footer-link" href=mailto:andrea.ruglioni@epfl.ch title="envelope">{{< fa envelope >}}</a>
       <a class="footer-link" href="blog/index.xml" title="RSS Feed">{{< fa rss >}}</a>
-    # <a class="footer-link" href="">{{< fa brands medium" >}}</a>
     right: 
       Made with [Quarto](https://quarto.org)<br>
       [Source code on {{< fa brands github >}} GitHub](https://github.com/Ruglio/web)
-
 
 
 format: 
@@ -69,9 +64,7 @@ format:
     mainfont: "Helvetica"
 
 
-
 page-layout: full
-
 
 
 execute: 
