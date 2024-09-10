@@ -118,7 +118,7 @@ Instead, the variance controls the amplitude of the function, with higher values
 
 ```{shinylive-python}
 #| standalone: true
-#| viewerHeight: auto
+#| viewerHeight: 475
 
 import numpy as np
 import matplotlib.pyplot as plt
