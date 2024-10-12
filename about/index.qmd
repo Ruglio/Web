@@ -1,6 +1,6 @@
 ---
 pagetitle: About Me
-image: ../assets/profile.jpg
+image: ../assets/images/profile.jpg
 about:
   template: trestles
   id: hero-heading
@@ -23,7 +23,7 @@ about:
 
 format:
   html:
-    css: ../assets/style_personalized.css
+    css: ../assets/styles/style_personalized.css
 ---
 
 
@@ -46,38 +46,85 @@ Get in touch by [sending me an email](mailto:andrea.ruglioni@epfl.ch) {{< fa fea
 
 ## Education
 
+:::::: {.grid}
+
+
+
+::::: {.g-col-12 .g-col-md-6}
+
 :::: {.grid}
 
-::: {.g-col-12 .g-col-md-6}
+::: {.g-col-12 .g-col-md-4 .mx-auto .my-auto}
+![](../assets/images/epfl.png){width=75px} 
+:::
 
+::: {.g-col-12 .g-col-md-8}
 **PhD in Quantitative Finance**  
 *Swiss Finance Institute, EPFL*  
 2024 - Present
-
-:::
-
-::: {.g-col-12 .g-col-md-6}
-
-**MSc in Mathematical Engineering**  
-*Politecnico di Torino*  
-2022 - 2024
-
-:::
-
-::: {.g-col-12 .g-col-md-6}
-
-**Erasmus+ Exchange Program**  
-*KTH Royal Institute of Technology*  
-2023 - 2024
-
-:::
-
-::: {.g-col-12 .g-col-md-6}
-
-**BSc in Mathematics for Engineering**  
-*Politecnico di Torino*  
-2019 - 2022
-
 :::
 
 ::::
+
+:::::
+
+
+::::: {.g-col-12 .g-col-md-6}
+
+:::: {.grid}
+
+::: {.g-col-12 .g-col-md-4 .mx-auto .my-auto}
+![](../assets/images/polito.png){width=75px}
+:::
+
+::: {.g-col-12 .g-col-md-8}
+**MSc in Mathematical Engineering**  
+*Politecnico di Torino*  
+2022 - 2024
+:::
+
+::::
+
+:::::
+
+
+::::: {.g-col-12 .g-col-md-6}
+
+:::: {.grid}
+
+::: {.g-col-12 .g-col-md-4 .mx-auto .my-auto}
+![](../assets/images/kth.png){width=75px}
+:::
+
+::: {.g-col-12 .g-col-md-8}
+**Erasmus+ Exchange Program**  
+*KTH Royal Institute of Technology*  
+2023 - 2024
+:::
+
+::::
+
+:::::
+
+
+::::: {.g-col-12 .g-col-md-6}
+
+:::: {.grid}
+
+::: {.g-col-12 .g-col-md-4 .mx-auto .my-auto}
+![](../assets/images/polito.png){width=75px}
+:::
+
+::: {.g-col-12 .g-col-md-8}
+**BSc in Mathematics for Engineering**  
+*Politecnico di Torino*  
+2019 - 2022
+:::
+
+::::
+
+:::::
+
+
+
+::::::

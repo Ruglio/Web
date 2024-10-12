@@ -9,13 +9,13 @@ website:
   cookie-consent: true
   site-url: https://ruglio.github.io/Web/
   description: "Doctoral candidate in quantitative finance at Swiss Finance Institute, EPFL"
-  favicon: assets/logo.svg
+  favicon: assets/images/logo.svg
   page-navigation: true
   back-to-top-navigation: false
   search: false
 
   navbar:
-    logo: assets/logo.svg
+    logo: assets/images/logo.svg
     # tools:
     #   - icon: github
     #     href: https://github.com/Ruglio
@@ -56,9 +56,9 @@ website:
 format: 
   html:
     theme:
-      light: [flatly, assets/theme_light.scss]
-      dark: [darkly, assets/theme_dark.scss]
-    css: assets/styles.css
+      light: [flatly, assets/styles/theme_light.scss]
+      dark: [darkly, assets/styles/theme_dark.scss]
+    css: assets/styles/styles.css
     code-link: true
     lightbox: true
     mainfont: "Helvetica"

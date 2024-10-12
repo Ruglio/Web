@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../assets/logo.svg" rel="icon" type="image/svg+xml">
+<link href="../assets/images/logo.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/cookie-consent/cookie-consent.js"></script>
 <link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
@@ -43,6 +43,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -87,8 +90,8 @@ cookieconsent.run({
   
 
 
-<link rel="stylesheet" href="../assets/styles.css">
-<link rel="stylesheet" href="../assets/style_personalized.css">
+<link rel="stylesheet" href="../assets/styles/styles.css">
+<link rel="stylesheet" href="../assets/styles/style_personalized.css">
 </head>
 
 <body class="nav-fixed">
@@ -99,7 +102,7 @@ cookieconsent.run({
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/logo.svg" alt="" class="navbar-logo">
+    <img src="../assets/images/logo.svg" alt="" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Andrea Ruglioni</span>
@@ -147,7 +150,7 @@ cookieconsent.run({
 
 <div class="quarto-about-trestles column-page">
   <div class="about-entity">
-    <img src="../assets/profile.jpg" class="about-image
+    <img src="../assets/images/profile.jpg" class="about-image
   rounded " style="width: 20em;">
     <div class="about-links">
   <a href="https://github.com/Ruglio" class="about-link" rel="" target="">
@@ -184,24 +187,52 @@ cookieconsent.run({
 <h2 data-anchor-id="education">Education</h2>
 <div class="grid">
 <div class="g-col-12 g-col-md-6">
+<div class="grid">
+<div class="g-col-12 g-col-md-4 mx-auto my-auto">
+<p><a href="../assets/images/epfl.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../assets/images/epfl.png" class="img-fluid" width="75"></a></p>
+</div>
+<div class="g-col-12 g-col-md-8">
 <p><strong>PhD in Quantitative Finance</strong><br>
 <em>Swiss Finance Institute, EPFL</em><br>
 2024 - Present</p>
 </div>
+</div>
+</div>
 <div class="g-col-12 g-col-md-6">
+<div class="grid">
+<div class="g-col-12 g-col-md-4 mx-auto my-auto">
+<p><a href="../assets/images/polito.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="../assets/images/polito.png" class="img-fluid" width="75"></a></p>
+</div>
+<div class="g-col-12 g-col-md-8">
 <p><strong>MSc in Mathematical Engineering</strong><br>
 <em>Politecnico di Torino</em><br>
 2022 - 2024</p>
 </div>
+</div>
+</div>
 <div class="g-col-12 g-col-md-6">
+<div class="grid">
+<div class="g-col-12 g-col-md-4 mx-auto my-auto">
+<p><a href="../assets/images/kth.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="../assets/images/kth.png" class="img-fluid" width="75"></a></p>
+</div>
+<div class="g-col-12 g-col-md-8">
 <p><strong>Erasmus+ Exchange Program</strong><br>
 <em>KTH Royal Institute of Technology</em><br>
 2023 - 2024</p>
 </div>
+</div>
+</div>
 <div class="g-col-12 g-col-md-6">
+<div class="grid">
+<div class="g-col-12 g-col-md-4 mx-auto my-auto">
+<p><a href="../assets/images/polito.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="../assets/images/polito.png" class="img-fluid" width="75"></a></p>
+</div>
+<div class="g-col-12 g-col-md-8">
 <p><strong>BSc in Mathematics for Engineering</strong><br>
 <em>Politecnico di Torino</em><br>
 2019 - 2022</p>
+</div>
+</div>
 </div>
 </div>
 
@@ -781,6 +812,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
