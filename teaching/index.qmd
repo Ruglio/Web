@@ -3,7 +3,7 @@ pagetitle: Teachings
 
 format:
   html:
-    css: ../assets/style_personalized.css
+    css: ../assets/styles/style_personalized.css
 ---
 
 ## Courses
