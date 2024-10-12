@@ -14,7 +14,7 @@ listing:
   image-height: 200px
 
 title-block-banner: false
-comments: false
+comments: false    
 ---
 
 
