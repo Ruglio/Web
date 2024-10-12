@@ -30,7 +30,7 @@ a.nav-link.active::after {
 }
 
 .navbar-brand > img {
-    width: 100%;
+    width: 30px;
 }
 
 div.quarto-post {
